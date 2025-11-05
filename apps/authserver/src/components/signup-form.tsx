@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@repo/auth-client/client";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters long").max(50, "Name must be at most 50 characters long"),

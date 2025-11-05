@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@repo/auth-client/client";
 
 const formSchema = z.object({
   email: z.email("Please enter a valid email address"),

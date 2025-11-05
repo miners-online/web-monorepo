@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Settings, LogOut } from "lucide-react"
 
-import { signOut, useSession } from "@/lib/auth-client"
+import { signOut, useSession } from "@repo/auth-client/client"
 
 // Helper function to get initials from name
 function getInitials(name: string): string {

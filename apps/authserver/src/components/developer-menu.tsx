@@ -20,7 +20,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@repo/auth-client/client";
 
 export function DeveloperMenu() {
   const [newApp, setNewApp] = useState({ name: "", redirectUri: "" });
@@ -40,10 +40,10 @@ export function DeveloperMenu() {
 
     try {
       // Register the application using Better Auth's oauth2.register method
-      await authClient.oauth2.register({
-        redirect_uris: [newApp.redirectUri],
-        token_endpoint_auth_method: "client_secret_basic",
-      });
+      // await authClient.oauth2.register({
+      //   redirect_uris: [newApp.redirectUri],
+      //   token_endpoint_auth_method: "client_secret_basic",
+      // });
 
       setNewApp({ name: "", redirectUri: "" });
       setIsDialogOpen(false);

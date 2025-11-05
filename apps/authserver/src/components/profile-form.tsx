@@ -15,8 +15,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { authClient } from "@/lib/auth-client";
-import { useSession } from "@/lib/auth-client";
+import { authClient } from "@repo/auth-client/client";
+import { useSession } from "@repo/auth-client/client";
 
 export function ProfileForm() {
   const { data: session, isPending: isSessionPending } = useSession();

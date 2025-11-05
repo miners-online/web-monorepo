@@ -9,8 +9,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { authClient } from "@/lib/auth-client";
-import { useSession } from "@/lib/auth-client";
+import { authClient } from "@repo/auth-client/client";
+import { useSession } from "@repo/auth-client/client";
 
 interface SocialProvider {
   id: string;
