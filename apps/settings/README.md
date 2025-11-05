@@ -1,1 +1,0 @@
-**This app is now deprecated. Miners Online now uses Clerk for authentication.**

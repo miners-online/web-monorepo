@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev --turbo",
+    "dev": "next dev --turbo --port 3001",
     "start": "next start",
     "postinstall": "fumadocs-mdx",
     "lint": "eslint"
@@ -35,6 +35,8 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.1.16",
     "@types/mdx": "^2.0.13",

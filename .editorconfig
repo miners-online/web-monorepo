@@ -12,4 +12,4 @@ trim_trailing_whitespace = true
 [*.vue]
 tab_width = 2
 [*.tsx]
-tab_width = 4
+tab_width = 2
