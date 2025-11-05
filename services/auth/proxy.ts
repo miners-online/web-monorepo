@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { trustedOrigins } from "./lib/auth";
+import { trustedOrigins } from "@/lib/auth";
 
 export async function proxy(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith("/api")) {  
