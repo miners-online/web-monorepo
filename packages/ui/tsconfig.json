@@ -1,10 +1,10 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "outDir": "dist",
+    "baseUrl": ".",
     "paths": {
-      "@repo/auth-client/*": ["./src/*"]
+      "@repo/ui/*": ["./src/*"]
     }
   },
   "include": ["src"],

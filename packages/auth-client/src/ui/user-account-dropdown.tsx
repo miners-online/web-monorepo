@@ -7,12 +7,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+} from "@repo/ui/components/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@repo/ui/components/avatar"
+import { Button } from "@repo/ui/components/button"
 import { Settings, LogOut } from "lucide-react"
 
-import { signOut, useSession } from "@repo/auth-client/client"
+import { useAuthContext } from "@repo/auth-client/hooks/use-auth-context"
 
 // Helper function to get initials from name
 function getInitials(name: string): string {
@@ -24,36 +24,42 @@ function getInitials(name: string): string {
     .slice(0, 2)
 }
 
-interface UserAccountDropdownProps {
-  fallbackComponent?: React.ReactNode
+function fallbackComponent({signIn}: {signIn: () => Promise<void>}) {
+  return <Button variant="secondary" onClick={signIn}>Sign in</Button>
 }
 
-export function UserAccountDropdown(
-  props: UserAccountDropdownProps
-) {
-  const handleSignOut = () => {
-    signOut()
-  }
+
+export function UserAccountDropdown() {
 
   const handleSettings = () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL!}/account`
+    console.log("Settings clicked")
   }
 
-  const { data } = useSession()
+  const { state, signIn, signOut } = useAuthContext();
 
-  if (data == null) {
-    return props.fallbackComponent || null
+  console.log("UserAccountDropdown state:", state);
+
+  if (!state) {
+    return fallbackComponent({signIn});
+  }
+  const user = state.claims;
+
+  if (!user) {
+    return fallbackComponent({signIn});
   }
 
-  const user = data.user
+  const name = user.name || "Unknown User";
+  const initials = getInitials(name);
+  const email = user.email || "No Email";
+  const picture = user.picture || "";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-7 w-7 rounded-full" aria-label="Open user menu">
           <Avatar className="h-7 w-7">
-            <AvatarImage src={user.image || ""} alt={user.name} />
-            <AvatarFallback className="bg-primary text-primary-foreground">{getInitials(user.name)}</AvatarFallback>
+            <AvatarImage src={picture} alt={name} />
+            <AvatarFallback className="bg-primary text-primary-foreground">{initials}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -61,14 +67,12 @@ export function UserAccountDropdown(
         <DropdownMenuLabel className="font-normal">
           <div className="flex items-center gap-3">
             <Avatar className="h-9 w-9">
-              <AvatarImage src={user.image || ""} alt={user.name} />
-              <AvatarFallback className="bg-primary text-primary-foreground">
-                {getInitials(user.name)}
-              </AvatarFallback>
+              <AvatarImage src={picture} alt={name} />
+              <AvatarFallback className="bg-primary text-primary-foreground">{initials}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">{user.name}</p>
-              <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+              <p className="text-sm font-medium leading-none">{name}</p>
+              <p className="text-xs leading-none text-muted-foreground">{email}</p>
             </div>
           </div>
         </DropdownMenuLabel>
@@ -77,7 +81,7 @@ export function UserAccountDropdown(
           <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+        <DropdownMenuItem onClick={signOut} className="cursor-pointer">
           <LogOut className="mr-2 h-4 w-4" />
           <span>Sign Out</span>
         </DropdownMenuItem>

@@ -16,9 +16,9 @@ import { authentication } from '@/lib/openapi';
 export const source = loader(
   multiple({
     docs: docs.toFumadocsSource(),
-    authentication: await openapiSource(authentication, {
-      baseDir: 'authentication/(generated)',
-    }),
+    // authentication: await openapiSource(authentication, {
+    //   baseDir: 'authentication/(generated)',
+    // }),
   }),
   {
     baseUrl: '/docs',

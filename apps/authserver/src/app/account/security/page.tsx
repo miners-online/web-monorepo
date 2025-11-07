@@ -6,8 +6,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+} from "@repo/ui/components/card";
+import { Alert, AlertDescription, AlertTitle } from "@repo/ui/components/alert";
 import { AlertCircle } from "lucide-react";
 
 export const metadata: Metadata = {

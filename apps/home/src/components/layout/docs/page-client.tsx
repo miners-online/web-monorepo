@@ -26,7 +26,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '../../ui/collapsible';
+} from '@repo/ui/components/collapsible';
 import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
 import { useTOCItems } from '../../ui/toc';
 import { useActiveAnchor } from 'fumadocs-core/toc';

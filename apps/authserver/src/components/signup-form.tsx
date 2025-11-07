@@ -6,7 +6,7 @@ import * as z from "zod"
 import { useState } from "react";
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Button } from "@repo/ui/components/button"
 import {
   Field,
   FieldDescription,
@@ -14,8 +14,8 @@ import {
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+} from "@repo/ui/components/field"
+import { Input } from "@repo/ui/components/input"
 
 import { authClient } from "@repo/auth-client/client";
 

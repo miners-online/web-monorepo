@@ -7,8 +7,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+} from "@repo/ui/components/sheet";
+import { Button } from "@repo/ui/components/button";
 import { AccountNavigation } from "@/components/account-navigation";
 
 export function MobileAccountNav() {

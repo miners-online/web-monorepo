@@ -5,9 +5,9 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from './ui/popover';
+} from '@repo/ui/components/popover';
 import { cn } from '../lib/cn';
-import { buttonVariants } from './ui/button';
+import { buttonVariants } from '@repo/ui/components/button';
 
 export type LanguageSelectProps = ButtonHTMLAttributes<HTMLButtonElement>;
 

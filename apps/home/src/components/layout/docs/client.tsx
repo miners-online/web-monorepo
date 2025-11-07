@@ -3,7 +3,7 @@ import { cn } from '../../../lib/cn';
 import { type ComponentProps, useMemo } from 'react';
 import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
 import { useNav } from 'fumadocs-ui/contexts/layout';
-import { buttonVariants } from '../../ui/button';
+import { buttonVariants } from '@repo/ui/components/button';
 import { Sidebar as SidebarIcon } from 'lucide-react';
 import Link from 'fumadocs-core/link';
 import { usePathname } from 'fumadocs-core/framework';

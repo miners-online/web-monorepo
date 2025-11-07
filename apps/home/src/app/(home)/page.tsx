@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@repo/ui/components/card"
 
 import { MinecraftServerStatus } from "@/components/minecraft-server-status";
 

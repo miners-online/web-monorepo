@@ -15,13 +15,13 @@ import {
 import Link, { type LinkProps } from 'fumadocs-core/link';
 import { useOnChange } from 'fumadocs-core/utils/use-on-change';
 import { cn } from '../lib/cn';
-import { ScrollArea } from './ui/scroll-area';
+import { ScrollArea } from '@repo/ui/components/scroll-area';
 import { isActive } from '../lib/is-active';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from './ui/collapsible';
+} from '@repo/ui/components/collapsible';
 import { type ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
 import { cva } from 'class-variance-authority';

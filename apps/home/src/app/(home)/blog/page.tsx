@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@repo/ui/components/card"
+import { Badge } from "@repo/ui/components/badge"
 import { CalendarDays, Clock, ArrowRight } from "lucide-react"
 import { blog } from '@/lib/source';
-import { Button } from '@/components/ui/button';
+import { Button } from '@repo/ui/components/button';
 
 export default function Home() {
   const posts = blog.getPages();

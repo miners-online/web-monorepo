@@ -32,7 +32,7 @@ import {
 } from '../../sidebar';
 import { TreeContextProvider } from 'fumadocs-ui/contexts/tree';
 import { cn } from '../../../lib/cn';
-import { buttonVariants } from '../../ui/button';
+import { buttonVariants } from '@repo/ui/components/button';
 import {
   ChevronDown,
   Languages,
@@ -45,7 +45,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../../ui/popover';
+} from '@repo/ui/components/popover';
 import type * as PageTree from 'fumadocs-core/page-tree';
 import {
   LayoutBody,

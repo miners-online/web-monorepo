@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import {
   Card,
   CardContent,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+} from "@repo/ui/components/card";
+import { Badge } from "@repo/ui/components/badge";
 import { formatDistanceToNow } from "date-fns";
 import { Smartphone, Globe, Loader2 } from "lucide-react";
 import { toast } from "sonner";

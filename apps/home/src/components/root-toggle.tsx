@@ -6,7 +6,7 @@ import { usePathname } from 'fumadocs-core/framework';
 import { cn } from '../lib/cn';
 import { isTabActive } from '../lib/is-active';
 import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@repo/ui/components/popover';
 import type { SidebarTab } from 'fumadocs-ui/utils/get-sidebar-tabs';
 
 export interface Option extends SidebarTab {

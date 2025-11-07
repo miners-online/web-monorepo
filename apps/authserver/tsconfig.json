@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "@repo/auth-client/*": ["../../packages/auth-client/src/*"]
+      "@repo/auth-client/*": ["../../packages/auth-client/src/*"],
+      "@repo/ui/*": ["../../packages/ui/src/*"]
     },
     "plugins": [
       {

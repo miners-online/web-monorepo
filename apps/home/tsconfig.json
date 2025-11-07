@@ -4,7 +4,8 @@
     "paths": {
       "@/.source": ["./.source/index.ts"],
       "@/*": ["./src/*"],
-      "@repo/auth-client/*": ["../../packages/auth-client/src/*"]
+      "@repo/auth-client/*": ["../../packages/auth-client/src/*"],
+      "@repo/ui/*": ["../../packages/ui/src/*"]
     },
     "plugins": [
       {
@@ -18,7 +19,7 @@
     "next-env.d.ts",
     "next.config.js",
     ".next/types/**/*.ts"
-  ],
+, "../../packages/auth-client/src/ui/user-account-dropdown.tsx"  ],
   "exclude": [
     "node_modules"
   ]

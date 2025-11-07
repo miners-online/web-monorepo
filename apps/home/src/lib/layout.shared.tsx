@@ -2,10 +2,10 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { BookIcon, GitBranch } from 'lucide-react';
 import Image from 'next/image';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
 
-import { UserAccountDropdown } from '@/components/user-account-dropdown';
+import { UserAccountDropdown } from '@repo/auth-client/ui/user-account-dropdown';
 
 /**
  * Shared layout configurations
@@ -49,15 +49,7 @@ export function baseOptions(): BaseLayoutProps {
       },
       {
         type: 'custom',
-        children: <UserAccountDropdown
-          fallbackComponent={
-            <Button variant="secondary" asChild>
-              <Link href={`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/sign-in?callbackURL=${encodeURIComponent(homePage)}`}>
-                Sign In
-              </Link>
-            </Button>
-          }
-        />,
+        children: <UserAccountDropdown/>,
         secondary: true,
       },
     ],
