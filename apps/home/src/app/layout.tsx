@@ -1,33 +1,33 @@
-import './global.css';
-import { getLogtoContext, signIn, signOut } from '@logto/next/server-actions';
-import { AuthProvider} from "@repo/auth-client/hooks/use-auth-context";
-import { getAuthClientConfig } from '@repo/auth-client/server';
-import { RootProvider } from 'fumadocs-ui/provider/next';
-import { Inter } from 'next/font/google';
+import type { Metadata } from "next";
+import { type PropsWithChildren } from 'react';
+import '@primer/primitives/dist/css/functional/themes/light.css'
+import '@primer/react-brand/lib/css/main.css'
+import Theme from "@/components/Theme";
 
-const inter = Inter({
-  subsets: ['latin'],
-});
+const siteTitle = process.env.NEXT_PUBLIC_SITE_TITLE || 'Example Site'
 
-export default async function Layout({ children }: LayoutProps<'/'>) {
-  const config = getAuthClientConfig();
-  const state = await getLogtoContext(config);
+export const metadata: Metadata = {
+  title: {
+    absolute: '',
+    template: `%s - ${siteTitle}`,
+  },
+  icons: {
+    icon: '/favicon-256x256.png',
+  }
+}
+
+export default async function RootLayout({
+  children,
+}: Readonly<PropsWithChildren>) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
-      <body className="flex flex-col min-h-screen">
-        <AuthProvider
-          signOut={async () => {
-            'use server';
-            await signOut(config);
-          }}
-          signIn={async () => {
-            'use server';
-            await signIn(config);
-          }}
-          state={state}
-        >
-          <RootProvider>{children}</RootProvider>
-        </AuthProvider>
+    <html
+      lang="en"
+      dir="ltr"
+    >
+      <body>
+        <Theme>
+          {children}
+        </Theme>
       </body>
     </html>
   );
