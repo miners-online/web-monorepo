@@ -1,5 +1,5 @@
 import { FullPageError } from "@carbon/ibm-products";
-import { ExploreLinkList } from "./page";
+import { ExploreLinkList } from "./components/ExploreLinkList";
 
 export default function NotFound() {
   return (
