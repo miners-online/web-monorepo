@@ -1,0 +1,28 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+
+@use './mixins.scss' as *;
+@use './overrides.scss';
+
+html {
+  background-color: $layer-01;
+}
+
+.landing-page {
+  padding: 0 !important;
+}
+
+.landing-page__banner {
+  padding-top: $spacing-07;
+  padding-bottom: $spacing-01;
+  padding-left: $spacing-06;
+  padding-right: $spacing-06;
+  margin: 0 !important;
+  @include landing-page-background;
+}
+
+.c4p--full-page-error {
+    padding-top: $spacing-07;
+}
