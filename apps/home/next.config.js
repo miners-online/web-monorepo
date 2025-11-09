@@ -1,4 +1,5 @@
 import path from 'path';
+import { withContentCollections } from "@content-collections/next"
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -9,4 +10,4 @@ const nextConfig = {
     }
 };
 
-export default nextConfig;
+export default withContentCollections(nextConfig);

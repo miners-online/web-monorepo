@@ -1,4 +1,5 @@
 @use '@carbon/react/scss/colors';
+@use '@carbon/react/scss/spacing' as *;
 
 // overriding header tooltip bg color
 // because the navigation is dark themed while the content is white
@@ -15,4 +16,8 @@
   .action-icons {
     display: none;
   }
+}
+
+.header-container {
+  margin-bottom: $spacing-09;
 }

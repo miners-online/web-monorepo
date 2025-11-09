@@ -30,7 +30,7 @@ export default function AppHeader(props: AppHeaderProps) {
   };
 
   return (
-    <Theme theme="g100">
+    <Theme theme="g100" className="header-container">
       <HeaderContainer
         render={({ isSideNavExpanded, onClickSideNavExpand }) => (
           <Header aria-label="Navigation Container">

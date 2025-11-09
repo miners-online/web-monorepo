@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import '@carbon-labs/mdx-components/scss/index.scss'
 import '@carbon/ibmdotcom-styles';
 import '@carbon/ibm-products/css/index.min.css';
 import '@repo/ui/index.scss';

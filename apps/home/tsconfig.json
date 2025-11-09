@@ -5,7 +5,12 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "content-collections": [
+        "./.content-collections/generated"
+      ]
+    }
   },
   "include": [
     "**/*.ts",
