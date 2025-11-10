@@ -13,7 +13,7 @@ interface BlogPostPageProps {
   };
 }
 
-export default async function BlogPostPage({ post }: BlogPostPageProps) {
+export default function BlogPostPage({ post }: BlogPostPageProps) {
   return (
     <Grid className="landing-page" fullWidth>
       <Column sm={4} md={8} lg={16} className="landing-page__banner">

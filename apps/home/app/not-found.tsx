@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
+
 import { FullPageError } from "@carbon/ibm-products";
 import { ExploreLinkList } from "./components/ExploreLinkList";
+
+export const metadata: Metadata = {
+  title: "Page Not Found"
+}
 
 export default function NotFound() {
   return (
