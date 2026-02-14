@@ -1,0 +1,43 @@
+---
+import "../styles.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title } = Astro.props;
+
+const navLinks = [
+	{ title: "Documentation", href: "/docs" },
+	{ title: "Getting Started", href: "/docs/getting-started" },
+	{ title: "Server Rules", href: "/docs/rules" },
+];
+
+const socialLinks = [
+	{ title: "Discord", href: "https://discord.gg/aeRReEaNnm" },
+	{ title: "GitHub", href: "https://github.com/miners-online" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
+		<link rel="icon" type="image/png" sizes="160x160" href="/favicon-160x160.png" />
+		<link rel="icon" type="image/png" sizes="256x256" href="/favicon-256x256.png" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={Astro.props.description || "Miners Online - A friendly Minecraft SMP server"} />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<title>{title ? `${title} - Miners Online` : "Miners Online - Minecraft SMP"}</title>
+	</head>
+	<body>
+		<Header navLinks={navLinks} socialLinks={socialLinks} />
+		<slot />
+		<Footer />
+	</body>
+</html>

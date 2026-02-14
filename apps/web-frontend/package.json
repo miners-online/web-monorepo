@@ -1,0 +1,22 @@
+{
+  "name": "docs",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.5",
+    "daisyui": "^5.5.13",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19"
+  }
+}

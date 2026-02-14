@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+	<!-- Hero Section -->
+	<section class="hero bg-base-200"> 
+		<div class="hero-content text-center mb-12 mt-12">
+			<div class="max-w-md">
+				<h1 class="text-5xl font-bold">A Community Minecraft Experience</h1>
+				<p class="py-6">
+					Join Miners Online, a community-driven Minecraft SMP where Java and Bedrock players build together in the same world. Survival gameplay with social, economic, and administrative support.
+				</p>
+				<a href="#ready-to-join" class="btn btn-primary">Get Started</a>
+			</div>
+		</div>
+	</section>
+
+    <!-- Server Info -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-bold mb-12 text-center">Server Details</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="card bg-base-100 shadow-sm">
+				<div class="card-body">
+					<h3 class="card-title"><span>🌍</span>Survival Gameplay</h3>
+					Vanilla survival with plugins for social, economic, and administrative features.
+				</div>
+            </div>
+            <div class="card bg-base-100 shadow-sm">
+				<div class="card-body">
+					<h3 class="card-title"><span>🔄</span>Cross-Platform</h3>
+					Play together on Java & Bedrock editions. Running on 1.21.10
+				</div>
+            </div>
+            <div class="card bg-base-100 shadow-sm">
+                <div class="card-body">
+					<h3 class="card-title"><span>👥</span>Community</h3>
+					Join our Discord to connect with other players and get help.
+				</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Addresses -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 id="ready-to-join" class="text-3xl font-bold mb-12 text-center">Ready to Join?</h2>
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <!-- Java Edition -->
+            <div class="card bg-base-100 shadow-sm">
+				<div class="card-body">
+					<h3 class="card-title">
+						<span>☕</span> Java Edition
+					</h3>
+					<div class="mt-4">
+						<p class="mb-4">Supports versions 1.8 through 1.21.11</p>
+						<div class="flex flex-col sm:flex-row gap-4">
+							<div class="flex-1"> 
+								<p>Server Address:</p>
+								<div class="code-block">play.minersonline.uk</div>
+							</div>
+							<div>
+								<p class="text-sm text-muted mb-2">Server Port:</p>
+								<div class="code-block">25565</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+
+            <!-- Bedrock Edition -->
+            <div class="card bg-base-100 shadow-sm">
+				<div class="card-body">
+					<h3 class="card-title">
+						<span>🎮</span> Bedrock Edition
+					</h3>
+					<div class="mt-4">
+						<p class="mb-4">Windows 10/11, Nintendo Switch, Mobile & More</p>
+						<div class="flex flex-col sm:flex-row gap-4">
+							<div class="flex-1"> 
+								<p>Server Address:</p>
+								<div class="code-block">be.mc.minersonline.uk</div>
+							</div>
+							<div>
+								<p>Server Port:</p>
+								<div class="code-block">19132</div>
+							</div>
+						</div>
+						<p class="text-sm text-muted mt-4">
+						On console editions, you need some customisations according to <a class="link" href="https://geysermc.org/wiki/geyser/using-geyser-with-consoles/">GeyserMC's instructions.</a>
+						</p>
+					</div>
+				</div>
+            </div>
+        </div>
+        <div role="alert" class="alert alert-info alert-soft">
+            <span>
+				💡 Both Java and Bedrock players play together in the same world!
+				<br />
+				Server is not online 24/7, check Discord for updates.
+			</span>
+        </div>
+		<div class="card bg-base-100 shadow-sm mt-12">
+			<div class="card-body">
+				<p class="card-title justify-center">Follow us online</p>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+					<a href="https://discord.gg/aeRReEaNnm" class="btn btn-primary">Join Discord</a>
+					<a href="https://github.com/miners-online" class="btn btn-primary">View on GitHub</a>
+					<a href="https://maps.minersonline.uk" class="btn btn-primary">View Live Map</a>
+				</div>
+			</div>
+		</div>
+    </section>
+</Layout>
+

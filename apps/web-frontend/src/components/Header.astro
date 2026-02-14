@@ -1,0 +1,51 @@
+---
+import ThemeButton from "./ThemeButton.astro"
+
+interface Props {
+    navLinks: Array<{ title: string; href: string }>;
+    socialLinks: Array<{ title: string; href: string }>;
+}
+
+const { navLinks = [], socialLinks = [] } = Astro.props;
+---
+
+<div class="navbar bg-base-100 shadow-sm">
+    <div  class="navbar-start">
+        <img src="/favicon-64x64.png" alt="Miners Online Logo" class="h-10 w-10 mr-2"/>
+        <a href="/" class="btn btn-ghost text-xl">Miners Online</a>
+    </div>
+    <div class="navbar-center">
+        <ul class="menu menu-horizontal px-1 hidden md:flex">
+            {navLinks.map(link => (
+                <li><a href={link.href}>{link.title}</a></li>
+            ))}
+        </ul>
+        <ul class="menu menu-horizontal px-1 md:hidden">
+            <li>
+                <details>
+                <summary>Menu</summary>
+                <ul class="bg-base-100 rounded-t-none p-2">
+                    {navLinks.map(link => (
+                        <li><a href={link.href}>{link.title}</a></li>
+                    ))}
+                </ul>
+                </details>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-end">
+        <ul class="menu menu-horizontal px-1">
+            <li><ThemeButton/></li>
+            <li>
+                <details>
+                <summary>Socials</summary>
+                <ul class="bg-base-100 rounded-t-none p-2">
+                    {socialLinks.map(link => (
+                        <li><a href={link.href}>{link.title}</a></li>
+                    ))}
+                </ul>
+                </details>
+            </li>
+        </ul>
+    </div>
+</div>

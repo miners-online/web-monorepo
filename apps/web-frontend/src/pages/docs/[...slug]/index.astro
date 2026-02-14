@@ -1,0 +1,22 @@
+---
+import DocumentationLayout from "../../../layouts/DocumentationLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+    const docs = await getCollection("docs");
+    return docs.map((doc) => ({
+        params: { slug: doc.id },
+        props: { doc },
+    }));
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+---
+
+<DocumentationLayout title={doc.data.title} description={doc.data.description}>
+    <article class="prose lg:prose-xl max-w-none">
+        <h1>{doc.data.title}</h1>
+        <Content />
+    </article>
+</DocumentationLayout>
