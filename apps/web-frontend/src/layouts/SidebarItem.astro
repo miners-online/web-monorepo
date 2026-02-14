@@ -1,27 +1,24 @@
 ---
-import type { NavLink, NavFolder } from '../types';
-
+import type { NavItem } from '../types';
 
 interface Props {
-  item: NavLink | NavFolder;
+  item: NavItem;
 }
 
 const { item } = Astro.props;
 ---
 
-<li>
-    {("href" in item) && (
-        <a href={item.href} class="block link link-hover">{item.title}</a>
-    )}
-
-    {item.children && item.children.length > 0 && (
-        <details open>
-            <summary>{item.title}</summary>
-            <ul>
-                {item.children.map((child) => (
-                    <Astro.self item={child} />
-                ))}
-            </ul>
-        </details>
-    )}
-</li>
+{item.type === 'folder' ? (
+    <li>
+        <p class="menu-label">{item.title}</p>
+        <ul class="menu-list">
+            {item.children.map((child) => (
+                <Astro.self item={child} />
+            ))}
+        </ul>
+    </li>
+) : (
+    <li>
+        <a href={item.href}>{item.title}</a>
+    </li>
+)}

@@ -11,12 +11,7 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.6.0",
-    "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.5",
-    "daisyui": "^5.5.13",
-    "tailwindcss": "^4.1.18"
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.19"
+    "bulma": "^1.0.4"
   }
 }

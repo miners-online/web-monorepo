@@ -9,43 +9,48 @@ interface Props {
 const { navLinks = [], socialLinks = [] } = Astro.props;
 ---
 
-<div class="navbar bg-base-100 shadow-sm">
-    <div  class="navbar-start">
-        <img src="/favicon-64x64.png" alt="Miners Online Logo" class="h-10 w-10 mr-2"/>
-        <a href="/" class="btn btn-ghost text-xl">Miners Online</a>
+<nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a href="/" class="navbar-item">
+            <img src="/favicon-64x64.png" alt="Miners Online Logo" style="max-height: 2.5rem;"/>
+            <span class="ml-2 is-size-4">Miners Online</span>
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNav">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
     </div>
-    <div class="navbar-center">
-        <ul class="menu menu-horizontal px-1 hidden md:flex">
+    <div id="mainNav" class="navbar-menu">
+        <div class="navbar-start">
             {navLinks.map(link => (
-                <li><a href={link.href}>{link.title}</a></li>
+                <a href={link.href} class="navbar-item">{link.title}</a>
             ))}
-        </ul>
-        <ul class="menu menu-horizontal px-1 md:hidden">
-            <li>
-                <details>
-                <summary>Menu</summary>
-                <ul class="bg-base-100 rounded-t-none p-2">
-                    {navLinks.map(link => (
-                        <li><a href={link.href}>{link.title}</a></li>
-                    ))}
-                </ul>
-                </details>
-            </li>
-        </ul>
-    </div>
-    <div class="navbar-end">
-        <ul class="menu menu-horizontal px-1">
-            <li><ThemeButton/></li>
-            <li>
-                <details>
-                <summary>Socials</summary>
-                <ul class="bg-base-100 rounded-t-none p-2">
+        </div>
+        <div class="navbar-end">
+            <ThemeButton/>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">Socials</a>
+                <div class="navbar-dropdown">
                     {socialLinks.map(link => (
-                        <li><a href={link.href}>{link.title}</a></li>
+                        <a href={link.href} class="navbar-item">{link.title}</a>
                     ))}
-                </ul>
-                </details>
-            </li>
-        </ul>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const burgers = document.querySelectorAll('.navbar-burger');
+    burgers.forEach(burger => {
+        burger.addEventListener('click', () => {
+            const target = document.getElementById((burger as HTMLElement).dataset.target || '');
+            burger.classList.toggle('is-active');
+            target?.classList.toggle('is-active');
+        });
+    });
+});
+</script>

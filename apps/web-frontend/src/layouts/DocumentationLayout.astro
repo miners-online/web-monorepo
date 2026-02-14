@@ -12,6 +12,7 @@ interface Props {
 const docs = await getCollection("docs");
 
 const rootFolder: NavFolder = {
+  type: 'folder',
   title: "Documentation",
   children: [],
 };
@@ -24,6 +25,7 @@ docs.forEach((doc) => {
     if (isLastPart) {
       // It's a file
       currentFolder.children.push({
+        type: 'link',
         title: doc.data.title,
         href: `/docs/${doc.id}`,
       });
@@ -35,11 +37,11 @@ docs.forEach((doc) => {
         .join(" ");
 
       let nextFolder = currentFolder.children.find(
-        (child) => "title" in child && child.title === newTitle
+        (child) => child.type === 'folder' && child.title === newTitle
       ) as NavFolder | undefined;
 
       if (!nextFolder) {
-        nextFolder = { title: newTitle, children: [] };
+        nextFolder = { type: 'folder', title: newTitle, children: [] };
         currentFolder.children.push(nextFolder);
       }
 
@@ -53,14 +55,19 @@ const { title } = Astro.props;
 ---
 
 <Layout title={title} description={Astro.props.description}>
-  <div class="flex flex-col md:flex-row min-h-screen">
-    <ul class="menu w-full md:w-64 bg-base-200 rounded-box w-56">
-      {rootFolder.children.map((item) => (
-        <SidebarItem item={item} />
-      ))}
-    </ul>
-    <main class="flex-1 p-6 bg-base-100">
-      <div class="prose prose-lg max-w-full">
+  <div class="columns" style="min-height: 100vh;">
+    <aside class="column is-3 is-narrow-mobile is-fullheight px-5 py-5">
+      <aside class="menu">
+        <p class="menu-label">Documentation</p>
+        <ul class="menu-list">
+          {rootFolder.children.map((item) => (
+            <SidebarItem item={item} />
+          ))}
+        </ul>
+      </aside>
+    </aside>
+    <main class="column section">
+      <div class="container content is-medium">
         <slot />
       </div>
     </main>
