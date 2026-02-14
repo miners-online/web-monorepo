@@ -1,0 +1,24 @@
+{
+    "name": "api-server",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "db:push": "drizzle-kit push"
+    },
+    "devDependencies": {
+        "@types/node": "^25.2.3",
+        "drizzle-kit": "^0.31.9",
+        "tsx": "^4.7.0",
+        "typescript": "~5.9.3"
+    },
+    "dependencies": {
+        "@hono/node-server": "^1.19.9",
+        "@neondatabase/serverless": "^1.0.2",
+        "dotenv": "^17.3.1",
+        "drizzle-orm": "^0.45.1",
+        "hono": "^4.11.9",
+        "jose": "^6.1.3"
+    }
+}
