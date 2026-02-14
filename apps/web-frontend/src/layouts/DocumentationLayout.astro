@@ -55,8 +55,8 @@ const { title } = Astro.props;
 ---
 
 <Layout title={title} description={Astro.props.description}>
-  <div class="columns" style="min-height: 100vh;">
-    <aside class="column is-3 is-narrow-mobile is-fullheight px-5 py-5">
+  <div class="columns p-0 m-0" style="min-height: 100vh;">
+    <aside class="column is-3 is-narrow-mobile is-fullheight px-5 py-5" style="background-color: var(--bulma-scheme-main-bis);">
       <aside class="menu">
         <p class="menu-label">Documentation</p>
         <ul class="menu-list">

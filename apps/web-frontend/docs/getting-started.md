@@ -7,7 +7,7 @@ tags: ['getting started', 'introduction', 'guide']
 
 To get started with Miners Online, follow these steps:
 > 1. **Start Minecraft**: Launch your Minecraft client.
-> 2. **Add Server**: Go to the multiplayer section and add a new server with the address `play.minersonline.uk`, or `be.mc.minersonline.uk` for Bedrock Edition. If on a console follow [GeyserMC's instructions](https://geysermc.org/wiki/geyser/using-geyser-with-consoles/).
+> 2. **Add Server**: Go to the multiplayer section and add a new server with the address `play.minersonline.uk` for both Java and Bedrock Edition. If on a console follow [GeyserMC's instructions](https://geysermc.org/wiki/geyser/using-geyser-with-consoles/).
 > 3. **Join the Server**: Select the server from your list and click "Join Server".
 
 ## Version Compatibility

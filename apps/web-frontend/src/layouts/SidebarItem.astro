@@ -9,7 +9,7 @@ const { item } = Astro.props;
 ---
 
 {item.type === 'folder' ? (
-    <li>
+    <li class="py-5">
         <p class="menu-label">{item.title}</p>
         <ul class="menu-list">
             {item.children.map((child) => (
@@ -19,6 +19,6 @@ const { item } = Astro.props;
     </li>
 ) : (
     <li>
-        <a href={item.href}>{item.title}</a>
+        <a style="background-color: var(--bulma-scheme-main-bis);" href={item.href}>{item.title}</a>
     </li>
 )}
