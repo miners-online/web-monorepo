@@ -1,4 +1,4 @@
-import { db } from "../index";
+import { getDb } from "../index";
 import { eq } from "drizzle-orm";
 import {
   usersTable,
@@ -8,11 +8,13 @@ import {
 } from "../schema";
 
 export async function createUser(user: NewUser) {
+  const db = getDb();
   const [created] = await db.insert(usersTable).values(user).returning();
   return created;
 }
 
 export async function getUserById(id: string) {
+  const db = getDb();
   const [user] = await db
     .select()
     .from(usersTable)
@@ -22,6 +24,7 @@ export async function getUserById(id: string) {
 }
 
 export async function getUserByEmail(email: string) {
+  const db = getDb();
   const [row] = await db
     .select({
       user: usersTable,
@@ -35,6 +38,7 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function createUserPassword(password: NewUserPassword) {
+  const db = getDb();
   const [created] = await db
     .insert(userPasswordsTable)
     .values(password)
