@@ -27,6 +27,13 @@ export async function getAuthorizationCode(code: string) {
   return result ?? null;
 }
 
+export async function deleteAuthorizationCode(code: string) {
+  const db = getDb();
+  await db
+    .delete(authorizationCodesTable)
+    .where(eq(authorizationCodesTable.code, code));
+}
+
 export async function createAccessToken(token: NewAccessToken) {
   const db = getDb();
   const [created] = await db

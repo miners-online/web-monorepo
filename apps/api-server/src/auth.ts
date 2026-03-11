@@ -1,5 +1,5 @@
 import { Hono } from "hono"
-import { randomBytes } from "crypto"
+import { SignJWT, jwtVerify } from "jose"
 import * as users from "./db/repositories/users"
 import * as applications from "./db/repositories/applications"
 import * as oauth from "./db/repositories/oauth"
@@ -7,9 +7,9 @@ import { AppEnv } from "./types";
 
 const auth = new Hono<AppEnv>();
 
-function generateRandomString(len = 32) {
-  return randomBytes(len).toString("hex");
-}
+// Shared JWT secret bytes (HS256). Override with `JWT_SECRET` in production.
+const JWT_SECRET_BYTES = new TextEncoder().encode(process.env.JWT_SECRET || "dev-secret-change-this");
+const ISSUER = process.env.ISSUER || "https://api.example.com";
 
 async function isRedirectAllowed(applicationId: string, redirectUri?: string | null) {
   if (!redirectUri) return false;
@@ -56,11 +56,20 @@ auth.get("/authorize", async (c) => {
     return c.json({ error: "access_denied", error_description: "user not found" }, 400);
   }
 
-  const code = generateRandomString(32);
-  await oauth.createAuthorizationCode({ code, userId: user.id, applicationId: client_id });
+  // Issue a signed JWT as the authorization code (short-lived)
+  const authCodeJwt = await new SignJWT({ type: "authorization_code" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuer(ISSUER)
+    .setAudience(client_id)
+    .setSubject(user.id)
+    .setIssuedAt()
+    .setExpirationTime("10m")
+    .sign(JWT_SECRET_BYTES);
+
+  await oauth.createAuthorizationCode({ code: authCodeJwt, userId: user.id, applicationId: client_id });
 
   const dest = new URL(redirect_uri!);
-  dest.searchParams.set("code", code);
+  dest.searchParams.set("code", authCodeJwt);
   if (state) dest.searchParams.set("state", state);
 
   return c.redirect(dest.toString());
@@ -73,7 +82,7 @@ auth.post("/token", async (c) => {
 
   const grant_type = params.get("grant_type");
   if (grant_type !== "authorization_code") {
-      return c.json({ error: "unsupported_grant_type" }, 400);
+    return c.json({ error: "unsupported_grant_type" }, 400);
   }
 
   const code = params.get("code");
@@ -83,19 +92,41 @@ auth.post("/token", async (c) => {
   if (!code) return c.json({ error: "invalid_request", error_description: "missing code" }, 400);
   if (!client_id) return c.json({ error: "invalid_request", error_description: "missing client_id" }, 400);
 
-  const authCode = await oauth.getAuthorizationCode(code);
+  // Verify the authorization code JWT signature and claims first
+  try {
+    await jwtVerify(code!, JWT_SECRET_BYTES, {
+      issuer: process.env.ISSUER || "https://api.example.com",
+      audience: client_id!,
+    });
+  } catch (err) {
+    return c.json({ error: "invalid_grant", error_description: "invalid or expired code" }, 400);
+  }
+
+  const authCode = await oauth.getAuthorizationCode(code!);
   if (!authCode) return c.json({ error: "invalid_grant", error_description: "code not found" }, 400);
 
   if (authCode.applicationId !== client_id) return c.json({ error: "invalid_client" }, 400);
+
+  // Enforce one-time use
+  await oauth.deleteAuthorizationCode(code!);
 
   if (!(await isRedirectAllowed(client_id, redirect_uri))) {
     return c.json({ error: "invalid_request", error_description: "redirect_uri mismatch" }, 400);
   }
 
-  const token = generateRandomString(32);
-  await oauth.createAccessToken({ token, userId: authCode.userId, applicationId: authCode.applicationId });
+  // Create a signed JWT access token using `jose` (HS256).
+  const jwt = await new SignJWT({ scope: "access" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuer(ISSUER)
+    .setAudience(authCode.applicationId)
+    .setSubject(authCode.userId)
+    .setIssuedAt()
+    .setExpirationTime("1h")
+    .sign(JWT_SECRET_BYTES);
 
-  return c.json({ access_token: token, token_type: "Bearer", expires_in: 3600 });
+  await oauth.createAccessToken({ token: jwt, userId: authCode.userId, applicationId: authCode.applicationId });
+
+  return c.json({ access_token: jwt, token_type: "Bearer", expires_in: 3600 });
 });
 
 // Simple login endpoint
