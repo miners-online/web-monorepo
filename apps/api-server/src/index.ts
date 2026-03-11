@@ -1,10 +1,12 @@
 import { Hono } from "hono"
 import { serve } from "@hono/node-server"
 import auth from "./auth"
+import { AppEnv } from "./types";
 
 const isProd = process.env["NODE_ENV"] === "production"
 
-const app = new Hono();
+const app = new Hono<AppEnv>();
+
 app.route("/auth", auth);
 
 app.get("/api/hello", (c) => {
