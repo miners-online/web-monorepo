@@ -1,4 +1,9 @@
 import { Hono } from "hono"
+import {
+  getCookie,
+  setCookie,
+} from 'hono/cookie'
+
 import { SignJWT, jwtVerify } from "jose"
 import * as users from "./db/repositories/users"
 import * as applications from "./db/repositories/applications"
@@ -36,7 +41,7 @@ auth.get("/authorize", async (c) => {
   const redirect_uri = params.get("redirect_uri");
   const state = params.get("state");
 
-  const user_id = c.get("user_id");
+  const user_id = getCookie(c, "user_id");
 
   if (response_type !== "code") return c.json({ error: "unsupported_response_type" }, 400);
   if (!client_id) return c.json({ error: "invalid_request", error_description: "missing client_id" }, 400);
@@ -165,13 +170,18 @@ auth.post("/login", async (c) => {
     return c.html(loginForm, 400);
   }
 
-  const user = await users.getUserByEmail(email);
-  if (!user || user.password.passwordHash !== password) {
+  const userAndCreds = await users.getUserByEmail(email);
+  if (!userAndCreds || userAndCreds.password.passwordHash !== password) {
     const loginForm = renderLoginForm(return_to, "Invalid email or password");
     return c.html(loginForm, 400);
   }
 
-  c.set("user_id", user.user.id);
+  setCookie(c, "user_id", userAndCreds.user.id, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+  });
 
   return c.redirect(return_to);
 });
