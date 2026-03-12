@@ -5,6 +5,7 @@ import {
 } from 'hono/cookie'
 
 import { SignJWT, jwtVerify } from "jose"
+import type { JWTPayload } from "jose";
 import * as users from "./db/repositories/users"
 import * as applications from "./db/repositories/applications"
 import { AppEnv } from "./types";
@@ -18,14 +19,20 @@ const ISSUER = process.env.ISSUER || "https://api.example.com";
 async function isRedirectAllowed(applicationId: string, redirectUri?: string | null) {
   if (!redirectUri) return false;
   const uris = await applications.getRedirectUris(applicationId);
-  // Support exact matches and simple prefix wildcards stored as `...*`.
-  // This allows public/CLI clients to register loopback prefixes like
-  // `http://127.0.0.1:*/` or `http://localhost:*` saved as `http://127.0.0.1/*`.
-  return uris.some((r: any) => {
+  // Support exact matches and stored patterns with `*` anywhere.
+  // Convert stored pattern (shell-style `*`) to a safe RegExp and test the redirect.
+  return uris.some((r) => {
     const stored: string = r.redirectUri;
-    if (stored.endsWith("*")) {
-      const prefix = stored.slice(0, -1);
-      return redirectUri.startsWith(prefix);
+    if (stored.includes("*")) {
+      // Escape regexp special chars, then replace '*' with '.*'
+      const escaped = stored.replace(/[.+?^${}()|[\]\\]/g, "\\$&");
+      const pattern = `^${escaped.replace(/\*/g, ".*")}$`;
+      try {
+        const re = new RegExp(pattern);
+        return re.test(redirectUri);
+      } catch (err) {
+        return false;
+      }
     }
     return stored === redirectUri;
   });
@@ -40,6 +47,7 @@ auth.get("/authorize", async (c) => {
   const client_id = params.get("client_id");
   const redirect_uri = params.get("redirect_uri");
   const state = params.get("state");
+  const scope = params.get("scope");
 
   const user_id = getCookie(c, "user_id");
 
@@ -54,18 +62,22 @@ auth.get("/authorize", async (c) => {
     return c.json({ error: "invalid_request", error_description: "redirect_uri mismatch" }, 400);
   }
 
+  const returnTo = encodeURIComponent(c.req.url);
+
   if (!user_id) {
-    const returnTo = encodeURIComponent(c.req.url);
     return c.redirect(`/auth/login?return_to=${returnTo}`);
   }
 
   const user = await users.getUserById(user_id);
   if (!user) {
-    return c.json({ error: "access_denied", error_description: "user not found" }, 400);
+    return c.redirect(`/auth/login?return_to=${returnTo}`);
   }
 
   // Issue a signed JWT as the authorization code (short-lived)
-  const authCodeJwt = await new SignJWT({ type: "authorization_code" })
+  const codeClaims: JWTPayload = { type: "authorization_code" };
+  if (scope) codeClaims.scope = scope;
+
+  const authCodeJwt = await new SignJWT(codeClaims)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuer(ISSUER)
     .setAudience(client_id)
@@ -102,21 +114,17 @@ auth.post("/token", async (c) => {
   if (!client_id) return c.json({ error: "invalid_request", error_description: "missing client_id" }, 400);
   if (!redirect_uri) return c.json({ error: "invalid_request", error_description: "missing redirect_uri" }, 400);
 
-  // Verify and decode the authorization code JWT (self-contained)
-  let payload: any;
-  try {
-    const verified = await jwtVerify(code!, JWT_SECRET_BYTES, {
-      issuer: ISSUER,
-      audience: client_id!,
-    });
-    payload = verified.payload;
-  } catch (err) {
-    return c.json({ error: "invalid_grant", error_description: "invalid or expired code" }, 400);
-  }
+  const verified = await jwtVerify(code!, JWT_SECRET_BYTES, {
+    issuer: ISSUER,
+    audience: client_id!,
+  });
 
-  const userId = payload.sub as string | undefined;
+  const payload = verified.payload;
+
+  const userId = payload.sub;
   const aud = payload.aud;
-  const applicationId = Array.isArray(aud) ? aud[0] as string : aud as string;
+  const applicationId = Array.isArray(aud) ? aud[0] as string : (typeof aud === 'string' ? aud : undefined);
+  const grantedScope = payload.scope;
 
   if (!userId || !applicationId) {
     return c.json({ error: "invalid_grant", error_description: "invalid code claims" }, 400);
@@ -128,7 +136,11 @@ auth.post("/token", async (c) => {
 
   // Create a signed JWT access token using `jose` (HS256). We do not persist this token;
   // the token is self-contained and can be verified by the server when presented.
-  const jwt = await new SignJWT({ scope: "access" })
+  // Include scope in the token only if the authorization code carried one.
+  const jwtPayload: JWTPayload = {};
+  if (grantedScope) jwtPayload.scope = grantedScope;
+
+  const jwt = await new SignJWT(jwtPayload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuer(ISSUER)
     .setAudience(applicationId)
@@ -136,6 +148,10 @@ auth.post("/token", async (c) => {
     .setIssuedAt()
     .setExpirationTime("1h")
     .sign(JWT_SECRET_BYTES);
+
+  if (grantedScope) {
+    return c.json({ access_token: jwt, token_type: "Bearer", expires_in: 3600, scope: grantedScope });
+  }
 
   return c.json({ access_token: jwt, token_type: "Bearer", expires_in: 3600 });
 });
@@ -170,13 +186,13 @@ auth.post("/login", async (c) => {
     return c.html(loginForm, 400);
   }
 
-  const userAndCreds = await users.getUserByEmail(email);
-  if (!userAndCreds || userAndCreds.password.passwordHash !== password) {
+  const user = await users.getUserByEmail(email);
+  if (!user || user.passwordHash !== password) {
     const loginForm = renderLoginForm(return_to, "Invalid email or password");
     return c.html(loginForm, 400);
   }
 
-  setCookie(c, "user_id", userAndCreds.user.id, {
+  setCookie(c, "user_id", user.id, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",

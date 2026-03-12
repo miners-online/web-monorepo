@@ -6,21 +6,12 @@ export const usersTable = pgTable("users", {
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp().notNull().defaultNow(),
   role: varchar({ length: 50 }).notNull().default("user"),
+  email: varchar({ length: 255 }).notNull().unique(),
+  passwordHash: varchar({ length: 255 }).notNull(),
 });
 
 export type User = typeof usersTable.$inferSelect;
 export type NewUser = typeof usersTable.$inferInsert;
-
-export const userPasswordsTable = pgTable("user_passwords", {
-  userId: uuid().notNull().references(() => usersTable.id),
-  email: varchar({ length: 255 }).notNull().unique(),
-  passwordHash: varchar({ length: 255 }).notNull(),
-  createdAt: timestamp().notNull().defaultNow(),
-  updatedAt: timestamp().notNull().defaultNow(),
-});
-
-export type UserPassword = typeof userPasswordsTable.$inferSelect;
-export type NewUserPassword = typeof userPasswordsTable.$inferInsert;
 
 export const applicationsTable = pgTable("applications", {
   id: uuid().primaryKey().defaultRandom(),
