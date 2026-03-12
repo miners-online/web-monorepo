@@ -13,7 +13,17 @@ const ISSUER = process.env.ISSUER || "https://api.example.com";
 async function isRedirectAllowed(applicationId: string, redirectUri?: string | null) {
   if (!redirectUri) return false;
   const uris = await applications.getRedirectUris(applicationId);
-  return uris.some((r: any) => r.redirectUri === redirectUri);
+  // Support exact matches and simple prefix wildcards stored as `...*`.
+  // This allows public/CLI clients to register loopback prefixes like
+  // `http://127.0.0.1:*/` or `http://localhost:*` saved as `http://127.0.0.1/*`.
+  return uris.some((r: any) => {
+    const stored: string = r.redirectUri;
+    if (stored.endsWith("*")) {
+      const prefix = stored.slice(0, -1);
+      return redirectUri.startsWith(prefix);
+    }
+    return stored === redirectUri;
+  });
 }
 
 // Authorization endpoint (authorization code flow)
