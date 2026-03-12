@@ -2,7 +2,6 @@ import { Hono } from "hono"
 import { SignJWT, jwtVerify } from "jose"
 import * as users from "./db/repositories/users"
 import * as applications from "./db/repositories/applications"
-import * as oauth from "./db/repositories/oauth"
 import { AppEnv } from "./types";
 
 const auth = new Hono<AppEnv>();
@@ -29,18 +28,12 @@ auth.get("/authorize", async (c) => {
 
   const user_id = c.get("user_id");
 
-  if (response_type !== "code") {
-    return c.json({ error: "unsupported_response_type" }, 400);
-  }
-
-  if (!client_id) {
-    return c.json({ error: "invalid_request", error_description: "missing client_id" }, 400);
-  }
+  if (response_type !== "code") return c.json({ error: "unsupported_response_type" }, 400);
+  if (!client_id) return c.json({ error: "invalid_request", error_description: "missing client_id" }, 400);
+  if (!redirect_uri) return c.json({ error: "invalid_request", error_description: "missing redirect_uri" }, 400);
 
   const app = await applications.getApplicationById(client_id);
-  if (!app) {
-    return c.json({ error: "invalid_client" }, 400);
-  }
+  if (!app) return c.json({ error: "invalid_client" }, 400);
 
   if (!(await isRedirectAllowed(client_id, redirect_uri))) {
     return c.json({ error: "invalid_request", error_description: "redirect_uri mismatch" }, 400);
@@ -66,9 +59,10 @@ auth.get("/authorize", async (c) => {
     .setExpirationTime("10m")
     .sign(JWT_SECRET_BYTES);
 
-  await oauth.createAuthorizationCode({ code: authCodeJwt, userId: user.id, applicationId: client_id });
+  // Note: we don't persist the authorization code. The JWT itself is self-contained
+  // and will be validated when exchanged at the token endpoint.
 
-  const dest = new URL(redirect_uri!);
+  const dest = new URL(redirect_uri);
   dest.searchParams.set("code", authCodeJwt);
   if (state) dest.searchParams.set("state", state);
 
@@ -91,40 +85,42 @@ auth.post("/token", async (c) => {
 
   if (!code) return c.json({ error: "invalid_request", error_description: "missing code" }, 400);
   if (!client_id) return c.json({ error: "invalid_request", error_description: "missing client_id" }, 400);
+  if (!redirect_uri) return c.json({ error: "invalid_request", error_description: "missing redirect_uri" }, 400);
 
-  // Verify the authorization code JWT signature and claims first
+  // Verify and decode the authorization code JWT (self-contained)
+  let payload: any;
   try {
-    await jwtVerify(code!, JWT_SECRET_BYTES, {
-      issuer: process.env.ISSUER || "https://api.example.com",
+    const verified = await jwtVerify(code!, JWT_SECRET_BYTES, {
+      issuer: ISSUER,
       audience: client_id!,
     });
+    payload = verified.payload;
   } catch (err) {
     return c.json({ error: "invalid_grant", error_description: "invalid or expired code" }, 400);
   }
 
-  const authCode = await oauth.getAuthorizationCode(code!);
-  if (!authCode) return c.json({ error: "invalid_grant", error_description: "code not found" }, 400);
+  const userId = payload.sub as string | undefined;
+  const aud = payload.aud;
+  const applicationId = Array.isArray(aud) ? aud[0] as string : aud as string;
 
-  if (authCode.applicationId !== client_id) return c.json({ error: "invalid_client" }, 400);
-
-  // Enforce one-time use
-  await oauth.deleteAuthorizationCode(code!);
+  if (!userId || !applicationId) {
+    return c.json({ error: "invalid_grant", error_description: "invalid code claims" }, 400);
+  }
 
   if (!(await isRedirectAllowed(client_id, redirect_uri))) {
     return c.json({ error: "invalid_request", error_description: "redirect_uri mismatch" }, 400);
   }
 
-  // Create a signed JWT access token using `jose` (HS256).
+  // Create a signed JWT access token using `jose` (HS256). We do not persist this token;
+  // the token is self-contained and can be verified by the server when presented.
   const jwt = await new SignJWT({ scope: "access" })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuer(ISSUER)
-    .setAudience(authCode.applicationId)
-    .setSubject(authCode.userId)
+    .setAudience(applicationId)
+    .setSubject(userId)
     .setIssuedAt()
     .setExpirationTime("1h")
     .sign(JWT_SECRET_BYTES);
-
-  await oauth.createAccessToken({ token: jwt, userId: authCode.userId, applicationId: authCode.applicationId });
 
   return c.json({ access_token: jwt, token_type: "Bearer", expires_in: 3600 });
 });

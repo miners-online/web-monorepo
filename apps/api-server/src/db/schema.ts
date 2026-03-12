@@ -53,25 +53,3 @@ export const applicationRedirectUrisTable = pgTable("application_redirect_uris",
 
 export type ApplicationRedirectUri = typeof applicationRedirectUrisTable.$inferSelect;
 export type NewApplicationRedirectUri = typeof applicationRedirectUrisTable.$inferInsert;
-
-export const authorizationCodesTable = pgTable("authorization_codes", {
-  id: uuid().primaryKey().defaultRandom(),
-  code: varchar({ length: 255 }).notNull().unique(),
-  userId: uuid().notNull().references(() => usersTable.id),
-  applicationId: uuid().notNull().references(() => applicationsTable.id),
-  createdAt: timestamp().notNull().defaultNow(),
-});
-
-export type AuthorizationCode = typeof authorizationCodesTable.$inferSelect;
-export type NewAuthorizationCode = typeof authorizationCodesTable.$inferInsert;
-
-export const accessTokensTable = pgTable("access_tokens", {
-  id: uuid().primaryKey().defaultRandom(),
-  token: varchar({ length: 255 }).notNull().unique(),
-  userId: uuid().notNull().references(() => usersTable.id),
-  applicationId: uuid().notNull().references(() => applicationsTable.id),
-  createdAt: timestamp().notNull().defaultNow(),
-});
-
-export type AccessToken = typeof accessTokensTable.$inferSelect;
-export type NewAccessToken = typeof accessTokensTable.$inferInsert;
