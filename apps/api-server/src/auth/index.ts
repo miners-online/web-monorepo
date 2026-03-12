@@ -4,6 +4,7 @@ import { AppEnv } from "../types";
 import { token } from "./token";
 import { login } from "./login";
 import { authorization } from "./authorize";
+import { revoke } from "./revoke";
 
 // Shared JWT secret bytes (HS256). Override with `JWT_SECRET` in production.
 export const JWT_SECRET_BYTES = new TextEncoder().encode(process.env.JWT_SECRET || "dev-secret-change-this");
@@ -36,3 +37,4 @@ export const auth = new Hono<AppEnv>();
 auth.route("/", authorization);
 auth.route("/", login);
 auth.route("/", token);
+auth.route("/", revoke);

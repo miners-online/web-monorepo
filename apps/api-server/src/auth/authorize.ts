@@ -7,10 +7,14 @@ import { SignJWT } from "jose"
 import type { JWTPayload } from "jose";
 import * as users from "../db/repositories/users"
 import * as applications from "../db/repositories/applications"
+import * as tokens from "../db/repositories/tokens"
 import { AppEnv } from "../types";
 import { isRedirectAllowed, ISSUER, JWT_SECRET_BYTES } from ".";
 
 export const authorization = new Hono<AppEnv>().basePath("/auth");
+
+// Authorization code validity duration (10 minutes)
+const AUTHORIZATION_CODE_EXPIRY_MS = 10 * 60 * 1000;
 
 // Authorization endpoint (authorization code flow)
 authorization.get("/authorize", async (c) => {
@@ -47,8 +51,11 @@ authorization.get("/authorize", async (c) => {
     return c.redirect(`/auth/login?return_to=${returnTo}`);
   }
 
-  // Issue a signed JWT as the authorization code (short-lived)
-  const codeClaims: JWTPayload = { type: "authorization_code" };
+  // Create a signed JWT as the authorization code containing all necessary claims
+  const codeClaims: JWTPayload = { 
+    type: "authorization_code",
+    redirect_uri, // Include redirect_uri in the code for validation
+  };
   if (scope) codeClaims.scope = scope;
 
   const authCodeJwt = await new SignJWT(codeClaims)
@@ -60,8 +67,15 @@ authorization.get("/authorize", async (c) => {
     .setExpirationTime("10m")
     .sign(JWT_SECRET_BYTES);
 
-  // Note: we don't persist the authorization code. The JWT itself is self-contained
-  // and will be validated when exchanged at the token endpoint.
+  // Calculate expiry time for database tracking
+  const expiresAt = new Date(Date.now() + AUTHORIZATION_CODE_EXPIRY_MS);
+
+  // Store the code status in the database (we store the JWT as the code)
+  await tokens.createAuthorizationCode({
+    code: authCodeJwt, // Store the JWT itself for lookup
+    expiresAt: expiresAt,
+    usedAt: null,
+  });
 
   const dest = new URL(redirect_uri);
   dest.searchParams.set("code", authCodeJwt);
