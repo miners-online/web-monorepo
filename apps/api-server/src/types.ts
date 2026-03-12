@@ -1,8 +1,6 @@
 import { Env } from "hono";
 
-type HonoVariables = {
-    user_id?: string;
-}
+type HonoVariables = {}
 
 type AppEnv = {
     Variables: HonoVariables;
