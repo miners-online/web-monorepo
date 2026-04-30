@@ -4,6 +4,9 @@ date: "2026-04-30"
 ---
 
 import { Hero1 } from "@/components/hero1";
+import { ServerJoin } from "@/components/server-join";
+import { Availability } from "@/components/availability";
+
 import Prose from "@/components/Prose.astro";
 
 <Hero1
@@ -25,7 +28,13 @@ import Prose from "@/components/Prose.astro";
   }}
 />
 
-import { ServerJoin } from "@/components/server-join";
+
+<Availability
+  heading="Availability"
+  headingID="availability"
+  description="Current access status for this server."
+  IP="play.minersonline.uk"
+/>
 
 <ServerJoin
   heading="How to Join"
@@ -35,13 +44,4 @@ import { ServerJoin } from "@/components/server-join";
   version="1.8-26.1.2"
   editions="Java Edition and Bedrock Edition"
   note="This server is currently in development and will not be available to play."
-/>
-
-import { Availability } from "@/components/availability";
-
-<Availability
-  heading="Availability"
-  headingID="availability"
-  description="Current access status for this server."
-  IP="play.minersonline.uk"
 />
