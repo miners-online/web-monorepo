@@ -7,7 +7,10 @@ import { Hero1 } from "@/components/hero1";
 import Prose from "@/components/Prose.astro";
 
 <Hero1
-  badge={null}
+  badge={{
+    text: "Coming Soon",
+    url: "#availability"
+  }}
   heading="Minigames on Miners Online"
   description="Minigames are a fun and competitive way to enjoy Minecraft with friends. Join our Minigames server to play a variety of exciting games and compete for the top spot on the leaderboards! This is currently in development and will be available soon."
   buttons={{
@@ -32,4 +35,13 @@ import { ServerJoin } from "@/components/server-join";
   version="1.8-26.1.2"
   editions="Java Edition and Bedrock Edition"
   note="This server is currently in development and will not be available to play."
+/>
+
+import { Availability } from "@/components/availability";
+
+<Availability
+  heading="Availability"
+  headingID="availability"
+  description="Current access status for this server."
+  IP="play.minersonline.uk"
 />

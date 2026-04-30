@@ -18,7 +18,6 @@ interface Buttons {
 }
 interface Badge {
   text: string;
-  announcement?: string;
   url?: string;
 }
 
@@ -37,7 +36,6 @@ type Props = Partial<Hero1Props>;
 const defaultProps: Hero1Props = {
   badge: {
     text: "Changelog v1.1",
-    announcement: "Check out our latest updates",
   },
   heading: "Blocks Built With Shadcn & Tailwind",
   description:
@@ -70,9 +68,17 @@ const Hero1 = (props: Props) => {
         <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col items-center gap-5 text-center lg:items-start lg:text-left">
             {badge && (
-              <Badge variant="outline">
+              <Badge variant="outline" asChild={!!badge.url}>
+              {badge.url ? (
+                <a href={badge.url}>
                 {badge.text}
                 <RiArrowRightUpLine className="ml-2 size-4" />
+                </a>
+              ) : (
+                <>
+                {badge.text}
+                </>
+              )}
               </Badge>
             )}
             <h1 className="text-4xl font-semibold tracking-tight text-pretty lg:text-6xl">

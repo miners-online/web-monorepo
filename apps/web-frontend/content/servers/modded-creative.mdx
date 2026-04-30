@@ -7,7 +7,10 @@ import { Hero1 } from "@/components/hero1";
 import Prose from "@/components/Prose.astro";
 
 <Hero1
-  badge={null}
+  badge={{
+    text: "Not available 24/7, check for updates",
+    url: "#availability"
+  }}
   heading="Play Create on Miners Online"
   description="Experience our modpack focused on the Create mod allowing you to build complex contraptions and automate tasks. Join our Modded Creative server to unleash your creativity!"
   buttons={{
@@ -33,3 +36,12 @@ import { ServerJoin } from "@/components/server-join";
   editions="Java Edition"
   note="Mods are required to play on this server."
 />
+
+import { Availability } from "@/components/availability";
+
+<Availability
+  heading="Availability"
+  headingID="availability"
+  description="Current access status for this server."
+  IP="modded-creative.mc.minersonline.uk"
+/>;
