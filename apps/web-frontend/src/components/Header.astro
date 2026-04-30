@@ -1,12 +1,6 @@
 ---
-import ThemeButton from "./ThemeButton.astro"
-
-interface Props {
-    navLinks: Array<{ title: string; href: string }>;
-    socialLinks: Array<{ title: string; href: string }>;
-}
-
-const { navLinks = [], socialLinks = [] } = Astro.props;
+import { siteConfig } from "@/site.config";
+import ThemeButton from "./ThemeButton.tsx";
 ---
 
 <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
@@ -24,8 +18,8 @@ const { navLinks = [], socialLinks = [] } = Astro.props;
     </div>
     <div id="mainNav" class="navbar-menu">
         <div class="navbar-start">
-            {navLinks.map(link => (
-                <a href={link.href} class="navbar-item">{link.title}</a>
+            {siteConfig.topNavigation.map(link => (
+                <a href={link.href} class="navbar-item">{link.name}</a>
             ))}
         </div>
         <div class="navbar-end">
@@ -33,7 +27,7 @@ const { navLinks = [], socialLinks = [] } = Astro.props;
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">Socials</a>
                 <div class="navbar-dropdown">
-                    {socialLinks.map(link => (
+                    {siteConfig.socials.map(link => (
                         <a href={link.href} class="navbar-item">{link.title}</a>
                     ))}
                 </div>
@@ -41,16 +35,3 @@ const { navLinks = [], socialLinks = [] } = Astro.props;
         </div>
     </div>
 </nav>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const burgers = document.querySelectorAll('.navbar-burger');
-    burgers.forEach(burger => {
-        burger.addEventListener('click', () => {
-            const target = document.getElementById((burger as HTMLElement).dataset.target || '');
-            burger.classList.toggle('is-active');
-            target?.classList.toggle('is-active');
-        });
-    });
-});
-</script>
