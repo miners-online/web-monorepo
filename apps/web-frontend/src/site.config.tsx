@@ -1,4 +1,3 @@
-import { RiDiscordFill, RiGithubFill } from '@remixicon/react'
 import type { HeaderProps } from './components/Header';
 
 export interface SiteConfig {
@@ -7,25 +6,12 @@ export interface SiteConfig {
         description: string;
     };
     navigation: HeaderProps
-    servers: {
-        name: string;
-        address: string;
-        version: {
-            min: string;
-            max: string;
-        };
-        editions: ("java" | "bedrock")[];
-        links: {
-            title: string;
-            href: string;
-        }[];
-    }[];
 }
 
 export const siteConfig: SiteConfig = {
     meta: {
         title: "Miners Online",
-        description: "A friendly Minecraft SMP server",
+        description: "A collection of Minecraft servers for players of all interests and skill levels, from casual builders to competitive minigamers. Join our friendly community and explore our diverse range of servers, including survival, creative, modded, and mini-games. Whether you're looking to collaborate on epic builds, compete in thrilling challenges, or simply hang out with fellow Minecraft enthusiasts, Miners Online has something for everyone. Join us today and start your adventure!",
     },
     navigation: {
         logo: {
@@ -36,6 +22,15 @@ export const siteConfig: SiteConfig = {
         },
         menu: [
             { title: "Home", url: "/" },
+            {
+                title: "Servers",
+                url: "#",
+                items: [
+                    { title: "Minigames", url: "/servers/minigames", description: "Fun mini-games to play with friends, currently under construction" },
+                    { title: "Survival", url: "/servers/survival", description: "Our classic survival server, compatible with the latest versions" },
+                    { title: "Modded Creative", url: "/servers/modded-creative", description: "A Create mod focused creative server" },
+                ],
+            },
             {
                 title: "Resources",
                 url: "#",
@@ -50,48 +45,9 @@ export const siteConfig: SiteConfig = {
                 url: "#",
                 items: [
                     { title: "Discord", url: "https://discord.gg/aeRReEaNnm", description: "The official Miners Online Discord server" },
-                    { title: "GitHub", url: "https://github.com/miners-online", description: "Our GitHub organisation" },
+                    { title: "GitHub", url: "https://github.com/miners-online", description: "Find our source available projects on GitHub" },
                 ],
             }
         ],
     },
-    servers: [
-        {
-            name: "Minigames (Under Construction)",
-            address: "play.minersonline.uk",
-            version: {
-                min: "1.8",
-                max: "26.1.2"
-            },
-            editions: ["java", "bedrock"],
-            links: [
-                { title: "About", href: "/servers/minigames" },
-            ]
-        },
-        {
-            name: "Survival",
-            address: "survival.mc.minersonline.uk",
-            version: {
-                min: "1.8",
-                max: "26.1.2"
-            },
-            editions: ["java", "bedrock"],
-            links: [
-                { title: "About", href: "/servers/survival" },
-            ]
-        },
-        {
-            name: "Modded Creative",
-            address: "modded-creative.mc.minersonline.uk",
-            version: {
-                min: "1.21.1",
-                max: "1.21.1"
-            },
-            editions: ["java"],
-            links: [
-                { title: "About", href: "/servers/modded-creative" },
-                { title: "Modpack Guide", href: "#placeholder" },
-            ]
-        }
-    ]
 }
