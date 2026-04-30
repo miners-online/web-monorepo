@@ -3,8 +3,33 @@ title: Modded Creative
 date: "2026-04-30"
 ---
 
-IP: `modded-creative.mc.minersonline.uk`
-Version: 1.21.1
-Editions: Java Edition
+import { Hero1 } from "@/components/hero1";
+import Prose from "@/components/Prose.astro";
 
-**Mods are required**
+<Hero1
+  badge={null}
+  heading="Play Create on Miners Online"
+  description="Experience our modpack focused on the Create mod allowing you to build complex contraptions and automate tasks. Join our Modded Creative server to unleash your creativity!"
+  buttons={{
+    primary: {
+      text: "Join now",
+      url: "#how-to-join"
+    },
+    secondary: {
+      text: "Learn more",
+      url: "#features"
+    }
+  }}
+/>
+
+import { ServerJoin } from "@/components/server-join";
+
+<ServerJoin
+  heading="How to Join"
+  headingId="how-to-join"
+  description="Connect to the server using the following details."
+  ip="modded-creative.mc.minersonline.uk"
+  version="1.21.1"
+  editions="Java Edition"
+  note="Mods are required to play on this server."
+/>

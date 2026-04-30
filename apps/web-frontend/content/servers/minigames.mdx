@@ -3,8 +3,33 @@ title: Minigames
 date: "2026-04-30"
 ---
 
-IP: `play.minersonline.uk`
-Version: 1.8-26.1.2
-Editions: Java Edition and Bedrock Edition
+import { Hero1 } from "@/components/hero1";
+import Prose from "@/components/Prose.astro";
 
-**This server is currently in development and will not be available to play.**
+<Hero1
+  badge={null}
+  heading="Minigames on Miners Online"
+  description="Minigames are a fun and competitive way to enjoy Minecraft with friends. Join our Minigames server to play a variety of exciting games and compete for the top spot on the leaderboards! This is currently in development and will be available soon."
+  buttons={{
+    primary: {
+      text: "Join now",
+      url: "#how-to-join"
+    },
+    secondary: {
+      text: "Learn more",
+      url: "#features"
+    }
+  }}
+/>
+
+import { ServerJoin } from "@/components/server-join";
+
+<ServerJoin
+  heading="How to Join"
+  headingId="how-to-join"
+  description="Connect to the server using the following details."
+  ip="play.minersonline.uk"
+  version="1.8-26.1.2"
+  editions="Java Edition and Bedrock Edition"
+  note="This server is currently in development and will not be available to play."
+/>

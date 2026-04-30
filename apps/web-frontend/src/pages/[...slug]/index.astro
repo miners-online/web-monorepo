@@ -1,6 +1,7 @@
 ---
-import DocumentationLayout from "../../layouts/DocumentationLayout.astro";
-import Layout from "../../layouts/Layout.astro";
+import Prose from "@/components/Prose.astro";
+import DocumentationLayout from "@/layouts/DocumentationLayout.astro";
+import Layout from "@/layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -23,9 +24,11 @@ const { title, description, template } = doc.data;
 
 {template === "documentation" && (
     <DocumentationLayout title={title} description={description}>
-        <article class="content is-medium">
+        <article>
             <h1 class="title is-2">{title}</h1>
-            <Content />
+            <Prose>
+                <Content />
+            </Prose>
         </article>
     </DocumentationLayout>
 )}
