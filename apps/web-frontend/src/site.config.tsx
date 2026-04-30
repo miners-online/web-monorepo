@@ -1,3 +1,4 @@
+import type { FooterProps } from './components/footer';
 import type { HeaderProps } from './components/Header';
 
 export interface SiteConfig {
@@ -6,6 +7,7 @@ export interface SiteConfig {
         description: string;
     };
     navigation: HeaderProps
+    footer: FooterProps
 }
 
 export const siteConfig: SiteConfig = {
@@ -38,6 +40,7 @@ export const siteConfig: SiteConfig = {
                     { title: "Documentation", url: "/docs" },
                     { title: "Getting Started", url: "/docs/getting-started" },
                     { title: "Server Rules", url: "/docs/rules" },
+                    { title: "FAQ", url: "/docs/faq" },
                 ],
             },
             {
@@ -50,4 +53,44 @@ export const siteConfig: SiteConfig = {
             }
         ],
     },
+    footer: {
+        logo: {
+            url: "/",
+            src: "/favicon-256x256.png",
+            alt: "Miners Online Logo",
+            title: "Miners Online",
+        },
+        description: "A collection of Minecraft servers for players of all interests and skill levels, from casual builders to competitive minigamers. Join our friendly community and explore our diverse range of servers, including survival, creative, modded, and mini-games.",
+        copyright: "© 2017-2026 Miners Online. All rights reserved. Miners Online is not affiliated with Mojang AB or Microsoft Corporation.",
+        legalLinks: [
+            { name: "Privacy Policy", href: "https://github.com/miners-online/.github/blob/main/docs/legal/PRIVACY_POLICY.md" },
+            { name: "Terms of Service", href: "https://github.com/miners-online/.github/blob/main/docs/legal/TERMS_OF_SERVICE.md" },
+        ],
+        sections: [
+            {
+                title: "Servers",
+                links: [
+                    { name: "Minigames", href: "/servers/minigames" },
+                    { name: "Survival", href: "/servers/survival" },
+                    { name: "Modded Creative", href: "/servers/modded-creative" },
+                ],
+            },
+            {
+                title: "Resources",
+                links: [
+                    { name: "Documentation", href: "/docs" },
+                    { name: "Getting Started", href: "/docs/getting-started" },
+                    { name: "Server Rules", href: "/docs/rules" },
+                    { name: "FAQ", href: "/docs/faq" },
+                ],
+            },
+            {
+                title: "Community",
+                links: [
+                    { name: "Discord", href: "https://discord.gg/aeRReEaNnm" },
+                    { name: "GitHub", href: "https://github.com/miners-online" },
+                ],
+            },
+        ],
+    }
 }
