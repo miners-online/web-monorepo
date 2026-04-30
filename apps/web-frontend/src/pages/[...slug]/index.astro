@@ -1,0 +1,37 @@
+---
+import DocumentationLayout from "../../layouts/DocumentationLayout.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  function toRouteSlug(id: string) {
+    return id.replace(/(^|\/)index$/, "").replace(/\/$/, "");
+  }
+
+  const content = await getCollection("content");
+
+  return content.map((doc) => ({
+    params: { slug: toRouteSlug(doc.id) },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+const { title, description, template } = doc.data;
+---
+
+{template === "documentation" && (
+    <DocumentationLayout title={title} description={description}>
+        <article class="content is-medium">
+            <h1 class="title is-2">{title}</h1>
+            <Content />
+        </article>
+    </DocumentationLayout>
+)}
+
+{template === "plain" && (
+    <Layout title={title} description={description}>
+        <Content />
+    </Layout>
+)}

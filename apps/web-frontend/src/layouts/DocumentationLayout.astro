@@ -9,16 +9,19 @@ interface Props {
   description?: string;
 }
 
-const docs = await getCollection("docs");
+const content = await getCollection("content");
 
 const rootFolder: NavFolder = {
   type: 'folder',
   title: "Documentation",
   children: [],
 };
-docs.forEach((doc) => {
+content.forEach((doc) => {
   const parts = doc.id.split("/");
   let currentFolder = rootFolder;
+  const isDocumentation = doc.data.template === "documentation";
+  const isDocsIndex = doc.id === "docs";
+  if (!isDocumentation || isDocsIndex) return;
 
   parts.forEach((part, index) => {
     const isLastPart = index === parts.length - 1;
@@ -27,7 +30,7 @@ docs.forEach((doc) => {
       currentFolder.children.push({
         type: 'link',
         title: doc.data.title,
-        href: `/docs/${doc.id}`,
+        href: `/${doc.id}`,
       });
     } else {
       // It's a folder

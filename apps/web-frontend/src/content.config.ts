@@ -3,15 +3,19 @@ import { defineCollection } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 
 import { z } from 'astro/zod';
+import { siteConfig } from './site.config';
 
-const docs = defineCollection({
+const templates = ["documentation", "plain"] as const;
+
+const content = defineCollection({
     schema: z.object({
-        title: z.string(),
-        description: z.string().optional(),
+        title: z.string().optional().default(siteConfig.meta.title),
+        template: z.enum(templates).optional().default("plain"),
+        description: z.string().optional().default(siteConfig.meta.description),
         date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: 'Invalid date format' }),
         tags: z.array(z.string()).optional(),
     }),
-    loader: glob({ pattern: ["**/*.md", "**/*.mdx"], base: "./docs" }),
+    loader: glob({ pattern: ["*.{md,mdx}", "**/*.{md,mdx}"], base: "./content" }),
 });
 
-export const collections = { docs };
+export const collections = { content };
