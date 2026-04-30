@@ -1,6 +1,6 @@
 ---
 import "../styles.css";
-import Header from "../components/Header.astro";
+import { Header } from "../components/Header.tsx";
 import Footer from "../components/Footer.astro";
 import { siteConfig } from "@/site.config";
 
@@ -12,6 +12,8 @@ interface Props {
 const { title } = Astro.props;
 const siteTitle = siteConfig.meta.title;
 const siteDescription = siteConfig.meta.description;
+
+const finalTitle = title ? `${title} - ${siteTitle}` : siteTitle;
 ---
 
 <script is:inline>
@@ -44,10 +46,10 @@ const siteDescription = siteConfig.meta.description;
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={Astro.props.description || siteDescription} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		<title>{title ? `${title} - ${siteTitle}` : `${siteTitle}`}</title>
+		<title>{finalTitle}</title>
 	</head>
 	<body>
-		<Header/>
+		<Header client:load { ...siteConfig.navigation } />
 		<slot />
 		<Footer />
 	</body>
