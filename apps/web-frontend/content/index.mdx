@@ -6,6 +6,7 @@ date: "2026-04-30"
 import { Hero1 } from "@/components/hero1";
 import { ItemsBlock } from "@/components/items-block";
 import { ServerListBlock } from "@/components/server-list-block";
+import { BlogListingMinimal } from "@/components/blog-listing-minimal";
 
 import {
   RiApps2Line,
@@ -82,3 +83,6 @@ import {
     },
   ]}
 />
+
+{/* Recent blog posts */}
+<BlogListingMinimal posts={props.blogPosts} />
