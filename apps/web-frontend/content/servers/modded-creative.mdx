@@ -1,0 +1,80 @@
+---
+title: Modded Creative
+date: "2026-04-30"
+---
+
+import { Hero1 } from "@/components/hero1";
+import { Availability } from "@/components/availability";
+import { ServerJoin } from "@/components/server-join";
+import { ItemsBlock } from "@/components/items-block";
+
+import { RiCodeBoxLine, RiCompass2Line, RiHammerLine, RiLightbulbLine, RiLockUnlockLine } from "@remixicon/react";
+
+<Hero1
+  badge={{
+    text: "Not available 24/7, check for updates",
+    url: "#availability"
+  }}
+  heading="Play Create on Miners Online"
+  description="Experience our modpack focused on the Create mod allowing you to build complex contraptions and automate tasks. Join our Modded Creative server to unleash your creativity!"
+  buttons={{
+    primary: {
+      text: "Join now",
+      url: "#how-to-join"
+    },
+    secondary: {
+      text: "Learn more",
+      url: "#features"
+    }
+  }}
+/>
+
+<ItemsBlock
+  heading="Features"
+  headingId="features"
+  description="Discover the unique features of our Modded Creative server."
+  items={[
+    {
+      title: "Create mod included",
+      description: "A mod that adds a variety of mechanical components and systems to Minecraft, allowing for complex automation and contraptions.",
+      icon: RiCompass2Line
+    },
+    {
+      title: "Create: Power Grid included",
+      description: "An expansion for the Create mod that adds a new power system using real world electrical engineering concepts.",
+      icon: RiLightbulbLine
+    },
+    {
+      title: "CC:Tweaked included",
+      description: "Enhance your automation with CC:Tweaked, a mod that adds programmable computers and turtles to Minecraft, allowing for advanced control beyond basic assembly lines.",
+      icon: RiCodeBoxLine
+    },
+    {
+      title: "Creative mode",
+      description: "Players have access to unlimited resources and can fly, making it easier to build and experiment with the mods.",
+      icon: RiHammerLine
+    },
+    {
+      title: "Land protection",
+      description: "Protect your builds from griefing and unauthorized modifications with our land protection system.",
+      icon: RiLockUnlockLine
+    },
+  ]}>
+</ItemsBlock>
+
+<Availability
+  heading="Availability"
+  headingID="availability"
+  description="Current access status for this server."
+  IP="modded-creative.mc.minersonline.uk"
+/>;
+
+<ServerJoin
+  heading="How to Join"
+  headingId="how-to-join"
+  description="Connect to the server using the following details."
+  ip="modded-creative.mc.minersonline.uk"
+  version="1.21.1"
+  editions="Java Edition"
+  note="Mods are required to play on this server."
+/>

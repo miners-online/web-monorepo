@@ -1,0 +1,44 @@
+---
+title: Survival
+date: "2026-04-30"
+---
+
+import { Hero1 } from "@/components/hero1";
+import { Availability } from "@/components/availability";
+import { ServerJoin } from "@/components/server-join";
+
+<Hero1
+  badge={{
+    text: "Not available 24/7, check for updates",
+    url: "#availability"
+  }}
+  heading="Survival on Miners Online"
+  description="Survival is the core experience of Miners Online, where players can explore, build, and survive in a shared world. Join our Survival server to embark on your adventure!"
+  buttons={{
+    primary: {
+      text: "Join now",
+      url: "#how-to-join"
+    },
+    secondary: {
+      text: "Learn more",
+      url: "#features"
+    }
+  }}
+/>
+
+
+<Availability
+  heading="Availability"
+  headingID="availability"
+  description="Current access status for this server."
+  IP="survival.mc.minersonline.uk"
+/>;
+
+<ServerJoin
+  heading="How to Join"
+  headingId="how-to-join"
+  description="Connect to the server using the following details."
+  ip="survival.mc.minersonline.uk"
+  version="1.8-26.1.2"
+  editions="Java Edition and Bedrock Edition"
+/>

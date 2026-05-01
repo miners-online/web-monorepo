@@ -1,0 +1,88 @@
+---
+title: "Home"
+date: "2026-04-30"
+---
+
+import { Hero1 } from "@/components/hero1";
+import { ItemsBlock } from "@/components/items-block";
+import { ServerListBlock } from "@/components/server-list-block";
+import { BlogListingMinimal } from "@/components/blog-listing-minimal";
+
+import {
+  RiApps2Line,
+  RiHistoryLine,
+  RiTimerLine,
+} from "@remixicon/react";
+
+{/* Hero section */}
+<Hero1
+  badge={null}
+  heading="Miners Online"
+  description="Not just one server—multiple ways to play, each with its own experience."
+  buttons={{
+    primary: { text: "Explore servers", url: "#our-servers" },
+    secondary: { text: "Join Discord", url: "https://discord.gg/aeRReEaNnm" }
+  }}
+/>
+
+{/* Server list */}
+<ServerListBlock
+  heading="Our servers"
+  headingId="our-servers"
+  description="Choose a server by its play style, then open its landing page for full details."
+  servers={[
+    {
+      name: "Minigames",
+      href: "/servers/minigames/",
+      summary: "Fast-paced and experimental multiplayer gameplay built around custom minigames.",
+      version: "1.8-26.1.2",
+      editions: "Java + Bedrock",
+      status: "In development",
+    },
+    {
+      name: "Survival",
+      href: "/servers/survival/",
+      summary: "A community-focused survival experience that runs during scheduled or ad-hoc sessions.",
+      version: "1.8-26.1.2",
+      editions: "Java + Bedrock",
+      status: "Not 24/7",
+    },
+    {
+      name: "Modded Creative",
+      href: "/servers/modded-creative/",
+      summary: "A Create-focused modded sandbox for larger builds, machines, and collaborative projects.",
+      version: "1.21.1",
+      editions: "Java only",
+      status: "Mods required",
+    },
+  ]}
+/>
+
+{/* About section */}
+<ItemsBlock
+  heading="What is Miners Online?"
+  headingId="what-is-miners-online"
+  items={[
+    {
+      title: "Multiple servers, different experiences",
+      description:
+        "Miners Online is not a single Minecraft server. Each server offers a distinct way to play, from survival worlds to experimental and modded gameplay.",
+      icon: RiApps2Line,
+    },
+    {
+      title: "Evolving since 2017",
+      description:
+        "The platform has been running and iterating for years, shaping multiple generations of gameplay systems and design.",
+      icon: RiHistoryLine,
+    },
+    {
+      title: "Flexible availability",
+      description:
+        "Servers are not always online, and are brought up when needed to support focused sessions rather than constant uptime.",
+      icon: RiTimerLine,
+    },
+  ]}
+/>
+
+{/* Recent blog posts */}
+<BlogListingMinimal posts={props.blogPosts} />
