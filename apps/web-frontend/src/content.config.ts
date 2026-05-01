@@ -7,8 +7,6 @@ import { siteConfig } from './site.config';
 
 const topics = [
   "general",
-  "security",
-  "changelog",
   "server/minigames",
   "server/modded-creative",
   "server/survival"
