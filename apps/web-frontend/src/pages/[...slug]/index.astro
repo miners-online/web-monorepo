@@ -40,6 +40,13 @@ const { title, description, template } = doc.data;
     </Layout>
 )}
 
+{template === "blog" && (
+    <Layout title={title} description={description}>
+        <Content components={mdxComponents} />
+    </Layout>
+)}
+
+
 {template === "plain" && (
     <Layout title={title} description={description}>
         <Content components={mdxComponents} />

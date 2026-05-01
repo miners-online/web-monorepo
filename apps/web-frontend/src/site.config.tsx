@@ -23,6 +23,11 @@ export interface SiteConfig {
             }[];
         }[];
     };
+    blog: {
+        authors: {
+            [key: string]: { name: string; url: string }
+        }
+    }
 }
 
 export const siteConfig: SiteConfig = {
@@ -53,6 +58,7 @@ export const siteConfig: SiteConfig = {
                 url: "#",
                 items: [
                     { title: "Documentation", url: "/docs" },
+                    { title: "Blog", url: "/blog" },
                     { title: "Getting Started", url: "/docs/getting-started" },
                     { title: "Server Rules", url: "/docs/rules" },
                     { title: "FAQ", url: "/docs/faq" },
@@ -94,6 +100,7 @@ export const siteConfig: SiteConfig = {
                 title: "Resources",
                 links: [
                     { name: "Documentation", href: "/docs" },
+                    { name: "Blog", href: "/blog" },
                     { name: "Getting Started", href: "/docs/getting-started" },
                     { name: "Server Rules", href: "/docs/rules" },
                     { name: "FAQ", href: "/docs/faq" },
@@ -125,4 +132,9 @@ export const siteConfig: SiteConfig = {
             },
         ],
     },
+    blog: {
+        authors: {
+            "samuel-hulme": { name: "Samuel Hulme", url: "https://samsblog.minersonline.uk" }
+        }
+    }
 }
