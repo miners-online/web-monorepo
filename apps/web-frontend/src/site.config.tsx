@@ -8,6 +8,21 @@ export interface SiteConfig {
     };
     navigation: HeaderProps
     footer: FooterProps
+    docsSidebar: {
+        sections: {
+            name: string;
+            href: string;
+            isNew?: boolean;
+        }[];
+        groups: {
+            title: string;
+            items: {
+                name: string;
+                href: string;
+                isNew?: boolean;
+            }[];
+        }[];
+    };
 }
 
 export const siteConfig: SiteConfig = {
@@ -92,5 +107,22 @@ export const siteConfig: SiteConfig = {
                 ],
             },
         ],
-    }
+    },
+    docsSidebar: {
+        sections: [
+            { name: "Documentation", href: "/docs" },
+            { name: "Getting Started", href: "/docs/getting-started" },
+            { name: "Rules", href: "/docs/rules" },
+            { name: "FAQ", href: "/docs/faq" },
+        ],
+        groups: [
+            {
+                title: "Guides",
+                items: [
+                    { name: "Economy Overview", href: "/docs/guides/economy-overview" },
+                    { name: "Land Claiming Guide", href: "/docs/guides/land-claiming" },
+                ],
+            },
+        ],
+    },
 }

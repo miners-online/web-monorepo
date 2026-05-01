@@ -1,6 +1,7 @@
 ---
-import DocumentationLayout from "@/layouts/DocumentationLayout.astro";
 import Layout from "@/layouts/Layout.astro";
+import DocsLayout from "@/components/docs-layout";
+import { mdxComponents } from "@/components/mdx-components";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -22,18 +23,25 @@ const { title, description, template } = doc.data;
 ---
 
 {template === "documentation" && (
-    <DocumentationLayout title={title} description={description}>
-        <article>
-            <h1 class="title is-2">{title}</h1>
-            {/* <Prose> */}
-                <Content />
-            {/* </Prose> */}
-        </article>
-    </DocumentationLayout>
+    <Layout title={title} description={description} isDocs={true}>
+        <DocsLayout>
+            <article class="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
+                <header class="flex flex-col gap-2">
+                    <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight sm:text-3xl">{title}</h1>
+                    {description && (
+                        <p class="text-[1.05rem] text-muted-foreground sm:text-base sm:text-balance md:max-w-[80%]">{description}</p>
+                    )}
+                </header>
+                <div class="pt-2">
+                    <Content components={mdxComponents} />
+                </div>
+            </article>
+        </DocsLayout>
+    </Layout>
 )}
 
 {template === "plain" && (
     <Layout title={title} description={description}>
-        <Content />
+        <Content components={mdxComponents} />
     </Layout>
 )}

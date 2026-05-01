@@ -23,6 +23,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/site.config";
 import { RiMenu2Line } from "@remixicon/react";
 
 export interface MenuItem {
@@ -35,6 +36,7 @@ export interface MenuItem {
 
 export interface HeaderProps {
   className?: string;
+  isDocs?: boolean;
   logo: {
     url: string;
     src: string;
@@ -60,6 +62,7 @@ const Header = ({
   menu,
   auth,
   className,
+  isDocs,
 }: HeaderProps) => {
   return (
     <section className={cn("py-4", className)}>
@@ -135,6 +138,38 @@ const Header = ({
                   >
                     {menu.map((item) => renderMobileMenuItem(item))}
                   </Accordion>
+                  {isDocs && (
+                    <div className="flex flex-col gap-3">
+                      <div className="text-sm font-medium text-muted-foreground">
+                        Documentation
+                      </div>
+                      {siteConfig.docsSidebar.sections.map((section) => (
+                        <a
+                          key={section.href}
+                          href={section.href}
+                          className="text-md font-semibold"
+                        >
+                          {section.name}
+                        </a>
+                      ))}
+                      {siteConfig.docsSidebar.groups.map((group) => (
+                        <div key={group.title} className="flex flex-col gap-2">
+                          <div className="text-sm font-medium text-muted-foreground">
+                            {group.title}
+                          </div>
+                          {group.items.map((item) => (
+                            <a
+                              key={item.href}
+                              href={item.href}
+                              className="text-md font-semibold"
+                            >
+                              {item.name}
+                            </a>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   {auth && (
                     <div className="flex flex-col gap-3">
                       <Button asChild variant="outline">

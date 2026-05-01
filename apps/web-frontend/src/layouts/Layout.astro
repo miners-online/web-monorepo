@@ -7,9 +7,10 @@ import { siteConfig } from "@/site.config";
 interface Props {
 	title?: string;
 	description?: string;
+	isDocs?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, isDocs } = Astro.props;
 const siteTitle = siteConfig.meta.title;
 const siteDescription = siteConfig.meta.description;
 
@@ -49,7 +50,7 @@ const finalTitle = title ? `${title} - ${siteTitle}` : siteTitle;
 		<title>{finalTitle}</title>
 	</head>
 	<body>
-		<Header client:load { ...siteConfig.navigation } />
+		<Header client:load { ...siteConfig.navigation } isDocs={isDocs} />
 		<slot />
 		<Footer { ...siteConfig.footer } />
 	</body>
