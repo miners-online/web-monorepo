@@ -5,27 +5,37 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { siteConfig } from './site.config';
 
+const topics = [
+  "general",
+  "security",
+  "changelog",
+  "server/minigames",
+  "server/modded-creative",
+  "server/survival"
+] as const;
+
 const commonFields = {
-    title: z.string().optional().default("Untitled"),
-    description: z.string().optional().default(siteConfig.meta.description),
-    date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: 'Invalid date format' }),
-    tags: z.array(z.string()).optional(),
+  title: z.string().optional().default("Untitled"),
+  description: z.string().optional().default(siteConfig.meta.description),
+  date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: 'Invalid date format' }),
+  tags: z.array(z.string()).optional(),
 };
 
 const documentationTemplate = z.object({
-    template: z.literal("documentation"),
-    ...commonFields
+  template: z.literal("documentation"),
+  ...commonFields
 });
 
 const plainTemplate = z.object({
-    template: z.literal("plain"),
-    ...commonFields
+  template: z.literal("plain"),
+  ...commonFields
 });
 
 const blogTemplate = z.object({
-    template: z.literal("blog"),
-    ...commonFields,
-    authors: z.array(z.string().refine((author) => author in siteConfig.blog.authors, { message: 'Author not found in site config' })),
+  template: z.literal("blog"),
+  ...commonFields,
+  authors: z.array(z.string().refine((author) => author in siteConfig.blog.authors, { message: 'Author not found in site config' })),
+  topics: z.array(z.enum(topics)).default(["general"]),
 });
 
 const contentSchema = z.preprocess((input) => {
