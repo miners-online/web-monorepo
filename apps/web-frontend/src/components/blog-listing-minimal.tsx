@@ -44,10 +44,10 @@ const BlogListingMinimal = ({ posts, className }: BlogListingMinimalProps) => {
             </Button>
           </div>
 
-          {/* Post list */}
-          <div className="divide-y divide-border">
+          {/* Card grid */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {recent.map((post) => (
-              <MinimalPostRow key={post.id} post={post} />
+              <MinimalPostCard key={post.id} post={post} />
             ))}
           </div>
 
@@ -66,7 +66,7 @@ const BlogListingMinimal = ({ posts, className }: BlogListingMinimalProps) => {
   );
 };
 
-const MinimalPostRow = ({ post }: { post: BlogPost }) => {
+const MinimalPostCard = ({ post }: { post: BlogPost }) => {
   const formattedDate = new Date(post.date).toLocaleDateString("en-GB", {
     year: "numeric",
     month: "short",
@@ -78,47 +78,49 @@ const MinimalPostRow = ({ post }: { post: BlogPost }) => {
     return author ? author.name : key;
   });
 
-  const href = `/blog/${post.id}`;
+  const href = `/${post.id}`;
 
   return (
-    <article className="group flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:gap-6">
-      {/* Topic badge — always visible, left-aligned or top on mobile */}
-      <div className="flex shrink-0 gap-1.5">
-        {post.topics.map((topic) => (
-          <Badge key={topic} variant="secondary">
-            {topicLabels[topic] ?? topic}
-          </Badge>
-        ))}
-      </div>
+    <article className="group flex h-full flex-col rounded-md border border-border bg-card p-6 transition-colors hover:border-primary/40">
+      {/* Topics */}
+      {post.topics.length > 0 && (
+        <div className="mb-3 flex flex-wrap gap-1.5">
+          {post.topics.map((topic) => (
+            <Badge key={topic} variant="secondary">
+              {topicLabels[topic] ?? topic}
+            </Badge>
+          ))}
+        </div>
+      )}
 
-      {/* Title + meta */}
-      <div className="flex flex-1 flex-col gap-1 min-w-0">
-        <a
-          href={href}
-          className="font-semibold leading-snug text-pretty transition-colors hover:text-primary line-clamp-2"
-        >
+      {/* Title */}
+      <h3 className="text-base font-semibold tracking-tight leading-snug text-pretty">
+        <a href={href} className="hover:text-primary transition-colors">
           {post.title}
         </a>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <RiCalendarLine className="size-3.5" />
-            <time dateTime={post.date}>{formattedDate}</time>
-          </span>
-          <span className="flex items-center gap-1">
-            <RiUser3Line className="size-3.5" />
-            {resolvedAuthors.join(", ")}
-          </span>
-        </div>
-      </div>
+      </h3>
 
-      {/* Arrow link */}
-      <a
-        href={href}
-        aria-label={`Read ${post.title}`}
-        className="hidden shrink-0 text-muted-foreground transition-colors hover:text-foreground sm:block"
-      >
-        <RiArrowRightLine className="size-5" />
-      </a>
+      {/* Description */}
+      {post.description && (
+        <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
+          {post.description}
+        </p>
+      )}
+
+      {/* Spacer */}
+      <div className="flex-1" />
+
+      {/* Metadata */}
+      <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border pt-4 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1">
+          <RiCalendarLine className="size-3.5" />
+          <time dateTime={post.date}>{formattedDate}</time>
+        </span>
+        <span className="flex items-center gap-1">
+          <RiUser3Line className="size-3.5" />
+          {resolvedAuthors.join(", ")}
+        </span>
+      </div>
     </article>
   );
 };

@@ -187,7 +187,7 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
     return author ? author.name : key;
   });
 
-  const href = `/blog/${post.id}`;
+  const href = `/${post.id}`;
 
   return (
     <article className="flex h-full flex-col rounded-md border border-border bg-card p-6">
