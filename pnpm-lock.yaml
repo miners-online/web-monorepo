@@ -6,7 +6,14 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    dependencies:
+      '@remixicon/react':
+        specifier: ^4.9.0
+        version: 4.9.0(react@19.2.5)
+      react:
+        specifier: ^19.2.5
+        version: 19.2.5
 
   apps/api-server:
     dependencies:
