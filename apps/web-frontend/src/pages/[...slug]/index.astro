@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import DocsLayout from "@/components/docs-layout";
+import { BlogPostLayout } from "@/components/blog-post-layout";
 import { mdxComponents } from "@/components/mdx-components";
 import { getCollection, render } from "astro:content";
 
@@ -20,6 +21,20 @@ export async function getStaticPaths() {
 const { doc } = Astro.props;
 const { Content } = await render(doc);
 const { title, description, template } = doc.data;
+
+// Collect blog posts to pass as props to MDX components that need them
+const allContent = await getCollection("content");
+const blogPosts = allContent
+  .filter((item) => item.data.template === "blog")
+  .map((item) => ({
+    id: item.id,
+    title: item.data.title,
+    description: item.data.description,
+    date: item.data.date,
+    authors: item.data.template === "blog" ? item.data.authors : [],
+    topics: item.data.template === "blog" ? item.data.topics : [],
+    tags: item.data.tags ?? [],
+  }));
 ---
 
 {template === "documentation" && (
@@ -40,15 +55,23 @@ const { title, description, template } = doc.data;
     </Layout>
 )}
 
-{template === "blog" && (
+{template === "blog" && doc.data.template === "blog" && (
     <Layout title={title} description={description}>
-        <Content components={mdxComponents} />
+        <BlogPostLayout
+            title={doc.data.title}
+            description={doc.data.description}
+            date={doc.data.date}
+            authors={doc.data.authors}
+            topics={doc.data.topics}
+            tags={doc.data.tags}
+        >
+            <Content components={mdxComponents} />
+        </BlogPostLayout>
     </Layout>
 )}
 
-
 {template === "plain" && (
     <Layout title={title} description={description}>
-        <Content components={mdxComponents} />
+        <Content components={mdxComponents} blogPosts={blogPosts} />
     </Layout>
 )}
