@@ -1,5 +1,4 @@
 ---
-import Prose from "@/components/Prose.astro";
 import DocumentationLayout from "@/layouts/DocumentationLayout.astro";
 import Layout from "@/layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
@@ -26,9 +25,9 @@ const { title, description, template } = doc.data;
     <DocumentationLayout title={title} description={description}>
         <article>
             <h1 class="title is-2">{title}</h1>
-            <Prose>
+            {/* <Prose> */}
                 <Content />
-            </Prose>
+            {/* </Prose> */}
         </article>
     </DocumentationLayout>
 )}
