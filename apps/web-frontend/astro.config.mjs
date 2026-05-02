@@ -17,5 +17,9 @@ export default defineConfig({
     ],
   },
 
-  integrations: [mdx(), sitemap(), react()]
+  integrations: [
+    mdx(),
+    sitemap(),
+    react()
+  ]
 });

@@ -47,6 +47,12 @@ const finalTitle = title ? `${title} - ${siteTitle}` : siteTitle;
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={Astro.props.description || siteDescription} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link
+			rel="alternate"
+			type="application/atom+xml"
+			title={`${siteTitle} Atom Feed`}
+			href={new URL("feed.xml", Astro.site)}
+		/>
 		<title>{finalTitle}</title>
 	</head>
 	<body>
