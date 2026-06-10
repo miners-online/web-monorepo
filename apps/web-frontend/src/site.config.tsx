@@ -45,15 +45,6 @@ export const siteConfig: SiteConfig = {
         menu: [
             { title: "Home", url: "/" },
             {
-                title: "Servers",
-                url: "#",
-                items: [
-                    { title: "Minigames", url: "/servers/minigames", description: "Fun mini-games to play with friends, currently under construction" },
-                    { title: "Survival", url: "/servers/survival", description: "Our classic survival server, compatible with the latest versions" },
-                    { title: "Modded Creative", url: "/servers/modded-creative", description: "A Create mod focused creative server" },
-                ],
-            },
-            {
                 title: "Resources",
                 url: "#",
                 items: [
@@ -88,14 +79,6 @@ export const siteConfig: SiteConfig = {
             { name: "Terms of Service", href: "https://github.com/miners-online/.github/blob/main/docs/legal/TERMS_OF_SERVICE.md" },
         ],
         sections: [
-            {
-                title: "Servers",
-                links: [
-                    { name: "Minigames", href: "/servers/minigames" },
-                    { name: "Survival", href: "/servers/survival" },
-                    { name: "Modded Creative", href: "/servers/modded-creative" },
-                ],
-            },
             {
                 title: "Resources",
                 links: [
