@@ -9,6 +9,7 @@ const serverIp = 'play.minersonline.uk'
 const discordUrl = 'https://discord.gg/aeRReEaNnm'
 const githubUrl = 'https://github.com/miners-online'
 const licenseUrl = 'https://github.com/miners-online/.github/blob/main/docs/legal/MOPSL.md'
+const blogUrl = '/blog/'
 
 const copied = ref(false)
 
@@ -70,6 +71,18 @@ async function copyIp () {
             variant="ghost"
           >
             GitHub
+          </UButton>
+
+          <UButton
+            as="a"
+            :href="blogUrl"
+            target="_blank"
+            rel="noreferrer"
+            size="lg"
+            color="info"
+            variant="ghost"
+          >
+            Read the blog
           </UButton>
         </div>
 
@@ -286,6 +299,25 @@ async function copyIp () {
           <p class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
             Developed iteratively with a focus on custom infrastructure, the network has evolved to include a shared lobby, minigames, and members-only legacy servers.
           </p>
+          <p class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+            The network is built solely by <a href="https://github.com/samuelh2005" target="_blank" rel="noreferrer" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300">Samuel Hulme</a>, the founder of Miners Online, with contributions from the community in various forms, but without any formal team structure or funding.
+          </p>
+          <p class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+            We have a blog where you can find articles, guides and updates about the network.
+          </p>
+
+          <div class="flex flex-wrap gap-3 pt-2">
+            <UButton
+              as="a"
+              :href="blogUrl"
+              target="_blank"
+              rel="noreferrer"
+              color="info"
+              variant="soft"
+            >
+              Read the blog
+            </UButton>
+          </div>
         </div>
       </section>
     </UContainer>
