@@ -1,0 +1,21 @@
+{
+  "name": "web-frontend3",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/local.ts",
+    "start": "node dist/local.js",
+    "build": "tsc -p tsconfig.json",
+    "vercel-build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.8",
+    "hono": "^4.6.10"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "@types/node": "^22.15.29"
+  }
+}
