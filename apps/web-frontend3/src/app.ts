@@ -1,17 +1,12 @@
 import { Hono } from 'hono'
-import { fileURLToPath } from 'node:url'
-import { logger } from './lib/logger.js'
-import { contentTypeFor, safeJoin, tryReadFile } from './lib/fs.js'
-import { resolvePageFilePath, getRegisteredRoutes } from './registry.js'
-import path from 'node:path'
+import { logger } from './lib/logger'
+import { contentTypeFor, safeJoin, tryReadFile } from './lib/fs'
 import { randomUUID } from 'node:crypto'
-import ejs from "ejs";
-import siteConfig from './config.js'
+import siteConfig from './config'
+import { loadTheme } from './extensions/theme'
 
 const app = new Hono<{ Variables: { requestId: string } }>()
-const appRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)))
-const pagesDir = path.join(appRoot, 'src', 'content', 'pages')
-const assetsDir = path.join(appRoot, 'public', 'assets')
+const theme = await loadTheme(siteConfig.theme)
 
 app.use('*', async (c, next) => {
   const requestId = randomUUID()
@@ -47,6 +42,7 @@ app.use('*', async (c, next) => {
 })
 
 app.get('/assets/*', async (c) => {
+  const assetsDir = theme.getAssetsDir();
   const requested = c.req.path.replace(/^\/assets\//, '')
   const filePath = safeJoin(assetsDir, requested)
 
@@ -67,30 +63,15 @@ app.get('/assets/*', async (c) => {
 })
 
 app.get('*', async (c) => {
-  const filePath = resolvePageFilePath(pagesDir, c.req.path)
+  const html = await theme.renderRoute(c.req.path)
 
-  if (!filePath) {
+  if (!html) {
     logger.warn('No HTML route matched', { path: c.req.path })
     return c.html(
       `<!doctype html><html><head><meta charset="utf-8"><title>404</title></head><body><h1>404</h1><p>No page was registered for <code>${c.req.path}</code>.</p></body></html>`,
       404,
     )
   }
-
-  logger.debug('Serving HTML page', { path: c.req.path, filePath })
-  const bytes = await tryReadFile(filePath)
-
-  if (!bytes) {
-    logger.warn('HTML file not found', { path: c.req.path, filePath })
-    return c.html('<!doctype html><html><head><meta charset="utf-8"><title>404</title></head><body><h1>404</h1><p>Page file missing.</p></body></html>', 404)
-  }
-
-  const template = bytes.toString('utf8');
-
-  const html = ejs.render(template, {
-    siteConfig: siteConfig
-  });
-
   return new Response(html, {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',

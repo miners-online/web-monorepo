@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { logger } from './logger'
 
 export function projectRoot() {
   return path.resolve(fileURLToPath(new URL('../..', import.meta.url)))
@@ -65,6 +66,7 @@ export async function tryReadFile(filePath: string) {
   try {
     return await readFile(filePath)
   } catch (error) {
+    logger.error("Unable to read file", {error})
     return null
   }
 }
