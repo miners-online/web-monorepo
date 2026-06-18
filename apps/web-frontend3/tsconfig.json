@@ -13,6 +13,6 @@
     "rootDir": ".",
     "types": ["node"]
   },
-  "include": ["src/**/*.ts", "api/**/*.ts"],
+  "include": ["src/**/*.ts", "api/**/*.ts", "extensions/**/*.*"],
   "exclude": ["node_modules", "dist"]
 }

@@ -5,7 +5,7 @@ import { projectRoot, tryReadFile } from './lib/fs.js'
 import ejs from 'ejs'
 import siteConfig from './config.js'
 
-const themesDir = path.join(projectRoot(), 'src', 'extensions', 'themes')
+const themesDir = path.join(projectRoot(), 'extensions', 'themes')
 
 type ThemeConfig = {
     routes: {
