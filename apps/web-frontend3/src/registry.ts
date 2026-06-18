@@ -7,9 +7,9 @@ export type PageRoute = {
 }
 
 const pages: PageRoute[] = [
-  { route: '/', file: 'index.html' },
-  { route: '/about', file: 'about.html' },
-  { route: '/docs', file: 'docs.html' },
+  { route: '/', file: 'index.ejs' },
+  { route: '/about', file: 'about.ejs' },
+  { route: '/docs', file: 'docs.ejs' },
 ]
 
 const pageByRoute = new Map<string, string>()

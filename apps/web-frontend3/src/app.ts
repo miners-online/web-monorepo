@@ -1,10 +1,12 @@
 import { Hono } from 'hono'
 import { fileURLToPath } from 'node:url'
 import { logger } from './lib/logger.js'
-import { contentTypeFor, safeJoin, tryReadBinaryFile } from './lib/fs.js'
+import { contentTypeFor, safeJoin, tryReadFile } from './lib/fs.js'
 import { resolvePageFilePath, getRegisteredRoutes } from './registry.js'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
+import ejs from "ejs";
+import siteConfig from './config.js'
 
 const app = new Hono<{ Variables: { requestId: string } }>()
 const appRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)))
@@ -50,7 +52,7 @@ app.get('/assets/*', async (c) => {
 
   logger.debug('Serving asset', { requested, filePath })
 
-  const bytes = await tryReadBinaryFile(filePath)
+  const bytes = await tryReadFile(filePath)
   if (!bytes) {
     logger.warn('Asset not found', { requested, filePath })
     return c.text('Asset not found', 404)
@@ -76,13 +78,20 @@ app.get('*', async (c) => {
   }
 
   logger.debug('Serving HTML page', { path: c.req.path, filePath })
-  const bytes = await tryReadBinaryFile(filePath)
+  const bytes = await tryReadFile(filePath)
+
   if (!bytes) {
     logger.warn('HTML file not found', { path: c.req.path, filePath })
     return c.html('<!doctype html><html><head><meta charset="utf-8"><title>404</title></head><body><h1>404</h1><p>Page file missing.</p></body></html>', 404)
   }
 
-  return new Response(bytes, {
+  const template = bytes.toString('utf8');
+
+  const html = ejs.render(template, {
+    siteConfig: siteConfig
+  });
+
+  return new Response(html, {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'no-cache',

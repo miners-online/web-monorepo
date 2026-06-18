@@ -61,11 +61,7 @@ export function contentTypeFor(filePath: string) {
   }
 }
 
-export async function readBinaryFile(filePath: string) {
-  return readFile(filePath)
-}
-
-export async function tryReadBinaryFile(filePath: string) {
+export async function tryReadFile(filePath: string) {
   try {
     return await readFile(filePath)
   } catch (error) {
