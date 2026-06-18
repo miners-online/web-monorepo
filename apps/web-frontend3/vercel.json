@@ -7,7 +7,7 @@
     }
   ],
   "functions": {
-    "api/**/*.js": {
+    "api/index.ts": {
       "includeFiles": "extensions/**/*"
     }
   }
