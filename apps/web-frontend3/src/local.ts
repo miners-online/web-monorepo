@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server'
-import app from './app'
-import { logger } from './lib/logger'
+import app from './app.js'
+import { logger } from './lib/logger.js'
 
 const port = Number(process.env.PORT ?? 3000)
 

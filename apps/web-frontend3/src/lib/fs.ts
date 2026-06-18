@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { logger } from './logger'
+import { logger } from './logger.js'
 
 export function projectRoot() {
   return path.resolve(fileURLToPath(new URL('../..', import.meta.url)))

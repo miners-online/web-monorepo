@@ -1,9 +1,9 @@
 import path from 'node:path'
 import { readFile } from 'node:fs/promises'
-import { normalizeRoute } from '../lib/url'
-import { projectRoot, tryReadFile } from '../lib/fs'
+import { normalizeRoute } from '../lib/url.js'
+import { projectRoot, tryReadFile } from '../lib/fs.js'
 import ejs from 'ejs'
-import siteConfig from '../config'
+import siteConfig from '../config.js'
 
 const themesDir = path.join(projectRoot(), 'extensions', 'themes')
 

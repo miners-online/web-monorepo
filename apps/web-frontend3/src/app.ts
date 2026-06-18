@@ -1,9 +1,9 @@
 import { Hono } from 'hono'
-import { logger } from './lib/logger'
-import { contentTypeFor, safeJoin, tryReadFile } from './lib/fs'
+import { logger } from './lib/logger.js'
+import { contentTypeFor, safeJoin, tryReadFile } from './lib/fs.js'
 import { randomUUID } from 'node:crypto'
-import siteConfig from './config'
-import { loadTheme } from './extensions/theme'
+import siteConfig from './config.js'
+import { loadTheme } from './extensions/theme.js'
 
 const app = new Hono<{ Variables: { requestId: string } }>()
 const theme = await loadTheme(siteConfig.theme)
