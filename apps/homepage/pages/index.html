@@ -2,53 +2,117 @@
 
 {% block title %}Home{% endblock %}
 
-{% block main %}
-<div class="home-background d-flex align-items-center justify-content-center flex-column text-white mb-4" style="background: url('https://placehold.co/2000x500') center / cover no-repeat; height: 500px">
-    <h1>Welcome on Miners Online</h1>
-    <h3>play.minersonline.uk</h3>
-</div>
-<div class="container content my-5">
-    <div id="status-message"></div>
+{% block head %}
+<style>
+    .header {
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    }
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <p>Test</p>
-        </div>
-    </div>
-        
-    <h2 class="text-center">
-        Servers
-    </h2>
+    .hero {
+        min-height: 50vh;
+        padding: 20px 0;
+        overflow: hidden;
+        padding-bottom: 6rem;
+    }
 
-    <div class="row gy-3 justify-content-center mb-4">
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h3 class="card-title">
-                        Miners Online
-                    </h3>
+    .hero-image-placeholder {
+        width: 100%;
+        max-width: 420px;
+        aspect-ratio: 1 / 1;
+        border-radius: 20px;
+        border: 2px dashed rgba(255,255,255,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255,255,255,0.7);
+        font-weight: 500;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(6px);
+    }
 
-                    <div class="progress mb-1">
-                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
-                    </div>
+    .play-now {
+        background: #fff;
+        color: #111;
+        padding: 5rem 0;
+        clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
+    }
 
-                    <p class="mb-1">
-                        0/500 online players
-                    </p>
-                                
-                    <p class="card-text">play.minersonline.uk</p>
+    .server-item {
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    .server-item:last-child {
+        border-bottom: none;
+    }
+
+    .server-item h3 {
+        margin: 0 0 0.35rem 0;
+    }
+
+    .server-item p {
+        margin: 0;
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+<!-- Hero Section -->
+<section class="hero d-flex align-items-center text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Left Content -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-4 fw-bold mb-3">
+                    Join Miners Online today.
+                </h1>
+
+                <p class="lead mb-4">
+                    Join our in development Minecraft server and compete in our farming, fishing, and mining competitions.
+                    Explore our custom worlds, minigames, and more. Join our community today!
+
+                    <i>Farming, fishing, and mining competitions are coming soon!</i>
+                </p>
+
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
+                    <a href="#play-now" class="btn btn-success btn-lg px-4">Play now</a>
+                    <a href="#features" class="btn btn-outline-light btn-lg px-4">Explore Features</a>
+                </div>
+            </div>
+
+            <!-- Right Image Placeholder -->
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                <div class="hero-image-placeholder mx-auto">
+                    <span>Image Placeholder</span>
                 </div>
             </div>
         </div>
     </div>
-        
-    <h2 class="text-center">
+</section>
+{% endblock %}
+
+{% block main %}
+<!-- Status Message Section -->
+{% if config.announcement %}
+<section class="container content my-2">
+    <div class="card mb-4">
+        <div class="card-body">
+            <p>{{ config.announcement }}</p>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- News Section -->
+<section class="container content my-2">
+    <h2 class="text-center" id="news">
         News
     </h2>
 
-    <div class="row gy-3">
-        <div class="col-md-6">
-            <div class="post-preview card">
+    <div class="row g-3">
+        <!-- Left big card -->
+        <div class="col-12 col-lg-8">
+            <div class="card h-100">
                 <div class="card-body">
                     <h3 class="card-title">
                         <a href="https://www.minersonline.uk/news/miners-online-update2">Miners Online Update 2: New website and infrastructure</a>
@@ -63,8 +127,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="post-preview card">
+
+        <!-- Right stacked cards -->
+        <div class="col-12 col-lg-4 d-flex flex-column gap-3">
+
+            <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">
                         <a href="https://www.minersonline.uk/news/miners-online-update1">Miners Online Update 1: Minigames Lobby</a>
@@ -78,9 +145,8 @@
                     Posted on February 1, 2026 by samuelh2005
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="post-preview card">
+
+            <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">
                         <a href="https://www.minersonline.uk/news/github-horror-story">GitHub Horror Story: When Our Site Was Stolen in the Dark</a>
@@ -94,7 +160,46 @@
                     Posted on October 28, 2024 by samuelh2005
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-body">Card 4</div>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- More news -->
+    <div class="text-center mt-4">
+        <a href="/news" class="btn btn-outline-primary">View all news</a>
+    </div>
+</section>
+
+<!-- Play Now Section -->
+<section class="play-now content" id="play-now">
+    <div class="container">
+        <h2 class="text-center mb-5">Play now</h2>
+
+        <div class="d-flex flex-column">
+            {% for server in page_data.servers %}
+            <div class="server-item">
+                <h3>{{ server.title }}</h3>
+                <p>
+                    <strong>Hostname:</strong> {{ server.hostname }}<br>
+                    <strong>Port:</strong> {{ server.port }}<br>
+                    <strong>Version:</strong> {{ server.version }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Game modes and features -->
+<section class="container content my-2">
+    <h2 class="text-center" id="features">
+        Game modes and features
+    </h2>
+
+
+
+</section>
 {% endblock %}

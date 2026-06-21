@@ -91,10 +91,18 @@ def template_name(page_path: Path) -> str:
 def render_page(page_path: Path):
     template = env.get_template(template_name(page_path))
 
+    yaml_path = page_path.with_suffix(".yaml")
+    if yaml_path.exists():
+        with open(yaml_path, "r", encoding="utf-8") as f:
+            page_data = safe_load(f)
+    else:
+        page_data = None    
+
     current_url = page_url(page_path)
 
     html = template.render(
         config=config,
+        page_data=page_data,
         current_url=current_url,
         build_time=BUILD_TIME
     )
