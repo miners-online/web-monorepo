@@ -10,8 +10,8 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from collections import defaultdict
 from pathlib import Path
+from typing import Dict, List
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 from yaml import safe_load
@@ -82,8 +82,20 @@ def output_path_for(page_path: Path) -> Path:
     """
     Preserve folder structure in dist/
     """
-    rel = page_path.relative_to(PAGES_DIR)
-    return DIST_DIR / rel
+    try:
+        rel = page_path.relative_to(PAGES_DIR)
+        return DIST_DIR / rel
+    except ValueError:
+        pass
+
+    try:
+        rel = page_path.relative_to(TEMPLATES_DIR)
+        return DIST_DIR / rel
+    except ValueError:
+        pass
+
+    # fallback (should not normally happen)
+    return DIST_DIR / page_path.name
 
 
 def template_name(page_path: Path) -> str:
@@ -105,7 +117,7 @@ def html_processor(path: Path, yaml: Path | None):
         with open(yaml, "r", encoding="utf-8") as f:
             page_data = safe_load(f)
     else:
-        page_data = None    
+        page_data = None
 
     current_url = page_url(path)
 
@@ -184,8 +196,11 @@ FileGroup = dict[str, Path]
 # ============================================================
 
 class Rule(ABC):
-
+    roots: List[Path]
     priority = 0
+
+    def __init__(self, roots: List[Path]):
+        self.roots = roots
 
     @abstractmethod
     def matches(self, group: FileGroup) -> bool:
@@ -197,14 +212,24 @@ class Rule(ABC):
 
 
 class HtmlWithYamlRule(Rule):
-
     priority = 100
 
     def matches(self, group: FileGroup) -> bool:
-        return (
-            ".html" in group
-            and any(ext in group for ext in (".yaml", ".yml"))
-        )
+        allowed_suffixes = {".html", ".yaml", ".yml"}
+
+        if ".html" not in group:
+            return False
+
+        if not any(ext in group for ext in (".yaml", ".yml")):
+            return False
+
+        for p in group.values():
+            if not p.is_relative_to(PAGES_DIR):
+                return False
+            if p.suffix.lower() not in allowed_suffixes:
+                return False
+
+        return True
 
     def process(self, group: FileGroup):
         yaml = group.get(".yaml") or group.get(".yml")
@@ -216,11 +241,21 @@ class HtmlWithYamlRule(Rule):
 
 
 class HtmlRule(Rule):
-
     priority = 90
 
     def matches(self, group: FileGroup) -> bool:
-        return ".html" in group
+        allowed_suffixes = {".html", ".yaml", ".yml"}
+
+        if ".html" not in group:
+            return False
+
+        for p in group.values():
+            if not p.is_relative_to(PAGES_DIR):
+                return False
+            if p.suffix.lower() not in allowed_suffixes:
+                return False
+
+        return True
 
     def process(self, group: FileGroup):
         html_processor(
@@ -230,11 +265,19 @@ class HtmlRule(Rule):
 
 
 class MarkdownRule(Rule):
-
     priority = 80
 
     def matches(self, group: FileGroup) -> bool:
-        return ".md" in group
+        if ".md" not in group:
+            return False
+
+        for p in group.values():
+            if not p.is_relative_to(PAGES_DIR):
+                return False
+            if p.suffix.lower() != ".md":
+                return False
+
+        return True
 
     def process(self, group: FileGroup):
         markdown_processor(
@@ -243,10 +286,17 @@ class MarkdownRule(Rule):
 
 
 class OtherRule(Rule):
-
     priority = -999999
 
     def matches(self, group: FileGroup) -> bool:
+        forbidden_suffixes = {".yaml", ".yml"}
+
+        for p in group.values():
+            if p.suffix.lower() in forbidden_suffixes:
+                return False
+            if p.is_relative_to(TEMPLATES_DIR) and p.suffix.lower() == ".html":
+                return False
+
         return True
 
     def process(self, group: FileGroup):
@@ -260,80 +310,40 @@ class OtherRule(Rule):
 # ============================================================
 
 class Router:
-
-    def __init__(self, rules: list[Rule]):
-
+    def __init__(self, rules: List[Rule]):
         self.rules = sorted(
             rules,
             key=lambda r: r.priority,
             reverse=True,
         )
 
-    def route(self, group: FileGroup):
-
-        for rule in self.rules:
-
-            if rule.matches(group):
-                rule.process(group)
-                return
-
-        raise RuntimeError(
-            f"No rule matched {group}"
-        )
-
-
-# ============================================================
-# Indexer
-# ============================================================
-
-class FileIndexer:
-
-    def __init__(self, root: Path):
-
-        self.root = Path(root)
-
-    def build(self) -> dict[Path, FileGroup]:
-
-        groups = defaultdict(dict)
-
-        for path in self.root.rglob("*"):
-
-            if not path.is_file():
-                continue
-
-            # site/index.html
-            # -> site/index
-
-            identity = path.with_suffix("")
-
-            groups[identity][path.suffix.lower()] = path
-
-        return dict(groups)
-
-
-# ============================================================
-# Engine
-# ============================================================
-
-class Engine:
-
-    def __init__(
-        self,
-        root: Path,
-        router: Router,
-    ):
-
-        self.root = Path(root)
-        self.router = router
-
     def run(self):
+        all_roots: List[Path] = []
+        for r in self.rules:
+            for root in r.roots:
+                if root not in all_roots:
+                    all_roots.append(root)
 
-        index = FileIndexer(
-            self.root
-        ).build()
+        groups: Dict[Path, FileGroup] = {}
 
-        for group in index.values():
-            self.router.route(group)
+        for root in all_roots:
+            for file_path in root.rglob("*"):
+                if not file_path.is_file():
+                    continue
+
+                identity = file_path.with_suffix("")
+
+                if identity not in groups:
+                    groups[identity] = {}
+
+                groups[identity][file_path.suffix.lower()] = file_path
+
+        # Execute rules (single pass, first match wins)
+        for group in groups.values():
+            for rule in self.rules:
+                if rule.matches(group):
+                    rule.process(group)
+                    break
 
 
 # ============================================================
@@ -342,18 +352,12 @@ class Engine:
 
 router = Router(
     [
-        HtmlWithYamlRule(),
-        HtmlRule(),
-        MarkdownRule(),
-        OtherRule(),
+        HtmlWithYamlRule(roots=[PAGES_DIR]),
+        HtmlRule(roots=[PAGES_DIR]),
+        MarkdownRule(roots=[PAGES_DIR]),
+        OtherRule(roots=[PAGES_DIR, TEMPLATES_DIR]),
     ]
 )
 
-engine = Engine(
-    root=PAGES_DIR,
-    router=router,
-)
-
 if __name__ == "__main__":
-    engine.run()
-
+    router.run()

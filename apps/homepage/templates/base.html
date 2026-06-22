@@ -6,34 +6,16 @@
         <title>{% block title %}Untitled{% endblock %} | {{ config.meta.siteName }}</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-        <style>
-            :root {
-                --green-0: #edf7ee;
-                --green-1: #dbefdc;
-                --green-2: #b7dfb9;
-                --green-3: #94cf96;
-                --green-4: #70bf73;
-                --green-5: #4CAF50;
-                --green-6: #3d8c40;
-                --green-7: #2e6930;
-                --green-8: #1e4620;
-                --green-9: #0f2310;
-                --blue-0: #e9f5fe;
-                --blue-1: #d3eafd;
-                --blue-2: #a6d5fa;
-                --blue-3: #7ac0f8;
-                --blue-4: #4dabf5;
-                --blue-5: #2196F3;
-                --blue-6: #1a78c2;
-                --blue-7: #145a92;
-                --blue-8: #0d3c61;
-                --blue-9: #071e31;
-            }
-        </style>
+        <link rel="stylesheet" href="/style.css">
+
+        <link rel="icon" type="image/png" sizes="256x256" href="https://github.com/miners-online/.github/blob/main/profile/logos/favicon-256x256.png?raw=true">
+        <link rel="icon" type="image/png" sizes="160x160" href="https://github.com/miners-online/.github/blob/main/profile/logos/favicon-160x160.png?raw=true">
+        <link rel="icon" type="image/png" sizes="64x64" href="https://github.com/miners-online/.github/blob/main/profile/logos/favicon-64x64.png?raw=true">
+
         {% block head %}{% endblock %}
     </head>
     <body class="d-flex flex-column bg-body-secondary">
-        <header class="header" style="background: linear-gradient(135deg, var(--blue-5), var(--blue-6), var(--green-5));">
+        <header class="header {% if "/" == current_url %}header-clip{% endif %}" style="background: linear-gradient(135deg, var(--blue-5), var(--blue-6), var(--green-5));">
             <nav class="navbar navbar-expand-md navbar-dark py-3">
                 <div class="container">
                     <a class="navbar-brand me-4" href="/">

@@ -1,0 +1,82 @@
+:root {
+    --green-0: #edf7ee;
+    --green-1: #dbefdc;
+    --green-2: #b7dfb9;
+    --green-3: #94cf96;
+    --green-4: #70bf73;
+    --green-5: #4CAF50;
+    --green-6: #3d8c40;
+    --green-7: #2e6930;
+    --green-8: #1e4620;
+    --green-9: #0f2310;
+    --blue-0: #e9f5fe;
+    --blue-1: #d3eafd;
+    --blue-2: #a6d5fa;
+    --blue-3: #7ac0f8;
+    --blue-4: #4dabf5;
+    --blue-5: #2196F3;
+    --blue-6: #1a78c2;
+    --blue-7: #145a92;
+    --blue-8: #0d3c61;
+    --blue-9: #071e31;
+}
+
+.header-clip {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.hero {
+    min-height: 50vh;
+    padding: 20px 0;
+    overflow: hidden;
+    padding-bottom: 6rem;
+}
+
+.hero-image-placeholder {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    border: 2px dashed rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(6px);
+}
+
+.play-now {
+    background: #fff;
+    color: #111;
+    padding: 5rem 0;
+    clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
+}
+
+.server-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.server-item:last-child {
+    border-bottom: none;
+}
+
+.server-item h3 {
+    margin: 0 0 0.35rem 0;
+}
+
+.server-item p {
+    margin: 0;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.content img {
+    max-width: 100%;
+    height: auto;
+}

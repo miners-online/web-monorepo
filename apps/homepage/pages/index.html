@@ -2,60 +2,6 @@
 
 {% block title %}Home{% endblock %}
 
-{% block head %}
-<style>
-    .header {
-        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-    }
-
-    .hero {
-        min-height: 50vh;
-        padding: 20px 0;
-        overflow: hidden;
-        padding-bottom: 6rem;
-    }
-
-    .hero-image-placeholder {
-        width: 100%;
-        max-width: 420px;
-        aspect-ratio: 1 / 1;
-        border-radius: 20px;
-        border: 2px dashed rgba(255,255,255,0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: rgba(255,255,255,0.7);
-        font-weight: 500;
-        background: rgba(255,255,255,0.05);
-        backdrop-filter: blur(6px);
-    }
-
-    .play-now {
-        background: #fff;
-        color: #111;
-        padding: 5rem 0;
-        clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
-    }
-
-    .server-item {
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    }
-
-    .server-item:last-child {
-        border-bottom: none;
-    }
-
-    .server-item h3 {
-        margin: 0 0 0.35rem 0;
-    }
-
-    .server-item p {
-        margin: 0;
-    }
-</style>
-{% endblock %}
-
 {% block header %}
 <!-- Hero Section -->
 <section class="hero d-flex align-items-center text-white">
@@ -94,7 +40,7 @@
 {% block main %}
 <!-- Status Message Section -->
 {% if config.announcement %}
-<section class="container content my-2">
+<section class="container my-2">
     <div class="card mb-4">
         <div class="card-body">
             <p>{{ config.announcement }}</p>
@@ -104,7 +50,7 @@
 {% endif %}
 
 <!-- News Section -->
-<section class="container content my-2">
+<section class="container my-2">
     <h2 class="text-center" id="news">
         News
     </h2>
@@ -174,7 +120,7 @@
 </section>
 
 <!-- Play Now Section -->
-<section class="play-now content" id="play-now">
+<section class="play-now" id="play-now">
     <div class="container">
         <h2 class="text-center mb-5">Play now</h2>
 
@@ -194,7 +140,7 @@
 </section>
 
 <!-- Game modes and features -->
-<section class="container content my-2">
+<section class="container my-2">
     <h2 class="text-center" id="features">
         Game modes and features
     </h2>
