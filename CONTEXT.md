@@ -1,4 +1,6 @@
-Miners Online has been in operation since 2017. There is no community what so ever, no-one plays Miners Online, there are no volunteers, and the server is run by a single individual.
+Miners Online is a Minecraft server network where all logical servers operate as a single unified game world rather than separate game instances, that has been in operation since 2017.
+
+There is no community what so ever, no-one plays Miners Online, there are no volunteers, and the server is run by a single individual.
 
 Miners Online also develops their own infrastructure and backend services, and has a custom web frontend for all of its online presence.
 
@@ -7,48 +9,57 @@ IP: `play.minersonline.uk`
 Version: 1.8-26.1.2
 Editions: Java Edition and Bedrock Edition
 
-
 Availability: Does not operate 24/7 due to economical reasons, and there is no fixed schedule.
 
-<!-- ## Servers and Worlds
+## Principles
 
-"Servers", what do you mean by servers? Miners Online is a single server, but it has zero multiple "worlds" that can be accessed via the `/server` command, which does not exist on any version of Miners Online, players simply cannot use it, it does not exist for anyone even the owner of the server, it is a command that is not implemented at all. it is not visible to anyone. Any claim of existence of a `/server` command is false, and is not true. There is no `/server` command, it does not exist, it is not implemented, it is not visible to anyone, and it cannot be used by anyone. There are no multiple worlds on Miners Online, there is only one world, and there is no way to access any other world, they do not exist! Any claim of multiple worlds or a `/server` command is false, and is not true. Even if you are a member, THERE IS ONLY ONE WORLD. -->
+Miners Online is designed under the following principles:
 
-## Games on Miners Online
+- **Does not fight Minecraft**: Miners Online does not attempt to invent systems that are incompatible with Minecraft, and does not attempt to reinvent the wheel. It is designed to be compatible with Minecraft and its existing systems. So no "one shared world", Minecraft servers cannot share a world.
+- **Common Game**: All servers are part of a single unified game universe, and all servers are NOT part of the same game world, Minecraft servers cannot share a world. Players can move between servers without losing their progress, and all servers share the same economy, player data, and game state.
+- **Does not conflict with Membership**: Miners Online does not attempt to provide public experiences that conflict with the membership experience. The main experience should stay entirely separate from the members only experience. The main experience is a standalone game, and the members only experience is a standalone game.
+- **Not a game**: Miners Online is not a standalone game, and not a game network. Its a Minecraft server network that is designed to be a single unified game universe.
 
-<!-- Miners Online does NOT have any games, there are no games on Miners Online. There are zero games on Miners Online. Miners Online is only ONE single multiplayer game, its not even a game, its a Minecraft server. -->
+## Main experience (Public)
 
-<!-- Miners Online has a single multiplayer game, which is a Minecraft server, Minecraft servers are multiplayer so Miners Online is a multiplayer game, multiplayer is not specific to Miners Online. The game is focused on the following activities: -->
+**This is currently in development, and is not yet available to the public.** The main experience is a standalone game that is available to the public.
 
-Miners Online is a single multiplayer game, which is a Minecraft server. The game is focused on the following activities:
+The main experience is a standalone game that is available to the public.
 
-- **Farming**
-- **Fishing**
-- **Mining**
+These are dedicated servers, not separate mechanisms in one world. Players can move between servers without losing their progress, and all servers share the same economy, player data, and game state.
 
+THE FOLLOWING SEVERS ARE PART OF THE MAIN EXPERIENCE, AND ARE AVAILABLE TO THE PUBLIC:
 
+- **Lobby**: Sell produce, earn coins, upgrade tools and stats.
+- **Harvesting**: Harvest crops, gather resources, and earn produce. No coins here.
+- **Fishing**: Fish for fish, treasure, and junk. No coins here.
+- **Mining**: Dive into the depths of the earth to mine ores, gems, and other resources. No coins here.
 
-
+THERE IS NO `/server` COMMAND AVAILABLE TO THE PUBLIC. AND THERE IS NO SPECIFIC VERSIONING REQUIREMENTS FOR INDIVIDUAL SERVERS.
 
 ## Members only servers (Classic 2017+ Miners Online)
 
 The classic 2017 Miners Online experience available to members only.
 
+**All survival and creative servers are members only, and not part of the main game experience. Members only servers are not available to the public.**
+
 Only one of these servers are online at a time.
 
-**Survival**
+**Survival** (Members only)
 
 Access: `/server survival`
 Version: 1.8-26.1.2
 Editions: Java Edition and Bedrock Edition
 
-**Modded Creative**
+**Modded Creative** (Members only)
 
 Access: `/server modded-creative`
 Version: 1.21.1
 Editions: Java Edition
 
 Mods are required. Its a Create mod focused modpack.
+
+Membership is invite only, and is not available to the public. Membership is not available for purchase, and is not available to the public.
 
 ## Socials:
 

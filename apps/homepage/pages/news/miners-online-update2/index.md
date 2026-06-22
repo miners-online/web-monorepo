@@ -1,0 +1,90 @@
+---
+template: article.html
+title: 'Miners Online Update 2: New website and infrastructure'
+description: "Miners Online has a new website and backend infrastructure! See our new website design, dynamic MOTD, server links, and forced hosts."
+date: "2026-05-01"
+authors: ["samuel-hulme"]
+tags: ["changelog", "infrastructure", "website"]
+topics: ["general"]
+---
+
+Throughout the last one month I have been working on the goals of simplification, professionalism, and clarity for Miners Online.
+This has resulted in a complete redesign of the website and a major overhaul of the backend infrastructure.
+
+In this article I will be summarising the changes and improvements that have been made, and what they mean for the future of Miners Online.
+
+## Website Redesign
+
+Miners Online had a well-architectured website, but it was not honest about what Miners Online is. It was a bit too technical,
+ignored the server splits, and was not very welcoming to new players. 
+
+I took a wrecking ball to the old website and rebuilt it from the ground up, *all in one day*, and I am very happy with the result.
+The new website is made with shadcn/ui and Tailwind CSS, and is much less garish then our Bulma based website.
+They only thing that stayed is Astro, which we used to build the website.
+
+### Feature 1: Logical site navigation
+
+The new site navigation makes finding different server experiences clear and easy. Informational resources and community links
+are also easily accessible. This is provided by a new header and footer, which are consistent across the whole website.
+
+### Feature 2: New homepage
+
+Instead of being focused on just the survival experience, the new homepage is focused on the whole Miners Online experience.
+There is clear separation of all the different game modes, the Miners Online story is told, and blog articles are featured.
+
+### Feature 3: Server summaries
+
+Each server now has a dedicated page on the website including:
+1. a summary of the server experience and features
+2. availability information (such as if the server is online or not) **currently hardcoded but will be dynamic in the future**
+3. metadata (such as IP, versions, and editions supported)
+4. modpack if required
+
+This makes it much easier for new players to find the server experience they are looking for, and get all the information they need to join.
+
+### Feature 4: Restoration of the blog
+
+The blog is back! It was hidden for a while as it was not being updated, but now it is back and will be updated regularly with
+news and updates about Miners Online.
+
+## Backend infrastructure improvements
+
+Miners Online is now powered by [Gate from MineKube](https://minekube.com/gate/), a modern Minecraft proxy server written in Go.
+Compared to our old Velocity proxy, Gate is much more lightweight which is essential for tight computing budgets.
+
+I have implemented a [custom Gate plugin](https://github.com/samuelh2005/miners-online-proxy) and [configured Docker environments](https://github.com/samuelh2005/homelab/tree/main/minecraft) to provide the following features:
+
+### Feature 1: Dynamic server MOTD
+
+The MOTD now provides colourful advertising that rotates on a schedule making Miners Online stand out in the server list and appear more professional.
+
+### Feature 2: Server Links
+
+Right in the in-game pause menu, players can now see a "Server Links" button that opens a GUI with links to our website, discord, and
+other resources. This makes it much easier for players to find our community and resources.
+
+In addition, the game will suggest players to report a bug by automatically providing a direct link to our GitHub issues page when they
+disconnect with an error message.
+
+### Feature 3: Forced hosts *(also lobby no more!)*
+
+Instead of having an empty lobby server, we have implemented forced hosts. This means that when players must join the server specifying a
+subdomain of the server they want. This makes the logical split much easier to understand rather then focusing on one specific server.
+
+By creating our server summaries, players are informed about the different server experiences and how to join them, meaning they can
+easily find the experience they are looking for without needing to ask in Discord or guess.
+
+## Conclusion
+
+The new website and infrastructure improvements represent a major step forward for Miners Online. The new website is much more welcoming and informative
+for new players, and the infrastructure improvements make the server more reliable and professional.
+
+## What's next?
+
+As always, there is more to come! In the next few months we will be working on:
+
+- Whole site search functionality
+- Dynamic server availability information
+- Documentation restructure and improvements
+- Replacement of dummy/placeholder promotional images
+- Restoration of the lobby, *once Gate resolves [ViaVersion issues](https://github.com/search?q=repo%3Aminekube%2Fgate+author%3Asamuelh2005+version+OR+ViaFabric&type=issues)*
