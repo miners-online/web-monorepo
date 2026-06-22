@@ -1,0 +1,52 @@
+---
+import type { Author } from '@/content.config';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+interface Props {
+    title: string;
+    description: string;
+    tags: string[];
+    authors: Author[];
+    date: string;
+}
+
+const { title, description, tags, authors, date } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+    <meta name="description" content={description} slot="head"/>
+    <meta name="keywords" content={tags.join(', ')} slot="head"/>
+    <meta name="author" content={authors.map((author) => author.id).join(', ')} slot="head"/>
+    <meta name="og:title" content={title} slot="head"/>
+    <meta name="og:description" content={description} slot="head"/>
+    <meta name="og:type" content="article" slot="head"/>
+
+    <main class="container content my-5">
+    <h1>{title}</h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <slot />
+            </div>
+            <hr>
+            <div class="d-md-flex justify-content-between align-items-center">
+                <div class="d-md-inline-block">
+                    <p>
+                        Posted on {new Date(date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) }
+                        by {authors.map((author, index) => (
+                            <span>
+                                <a href={author.data.url} class="text-decoration-none">{author.id}</a>
+                                {index < authors.length - 1 ? ', ' : ''}
+                            </span>
+                        ))}
+                    </p>
+                    <p>
+                        {tags.map((tag) => (
+                            <span class="badge bg-secondary">{tag}</span>
+                        ))}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

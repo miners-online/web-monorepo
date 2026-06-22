@@ -1,58 +1,39 @@
 import { defineCollection } from 'astro:content';
-
 import { glob } from 'astro/loaders';
-
 import { z } from 'astro/zod';
-import { siteConfig } from './site.config';
+import globals from '@/globals';
 
-const topics = [
-  "general",
-  "server/minigames",
-  "server/modded-creative",
-  "server/survival"
-] as const;
+const authorSchema = z.string().transform((author, ctx) => {
+    const obj = globals.authors[author]
 
-const commonFields = {
-  title: z.string().optional().default("Untitled"),
-  description: z.string().optional().default(siteConfig.meta.description),
-  date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: 'Invalid date format' }),
-  tags: z.array(z.string()).optional(),
-};
+    if (!obj) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Author not found in site config',
+        })
 
-const documentationTemplate = z.object({
-  template: z.literal("documentation"),
-  ...commonFields
-});
-
-const plainTemplate = z.object({
-  template: z.literal("plain"),
-  ...commonFields
-});
-
-const blogTemplate = z.object({
-  template: z.literal("blog"),
-  ...commonFields,
-  authors: z.array(z.string().refine((author) => author in siteConfig.blog.authors, { message: 'Author not found in site config' })),
-  topics: z.array(z.enum(topics)).default(["general"]),
-});
-
-const contentSchema = z.preprocess((input) => {
-  if (input && typeof input === 'object' && !Array.isArray(input)) {
-    const obj = input as Record<string, unknown>;
-    if (!('template' in obj)) {
-      return { ...obj, template: 'plain' };
+        return z.NEVER
     }
-  }
-  return input;
-}, z.discriminatedUnion("template", [
-  documentationTemplate,
-  plainTemplate,
-  blogTemplate,
-]));
 
-export const collections = {
-  content: defineCollection({
-    schema: contentSchema,
-    loader: glob({ pattern: ["*.{md,mdx}", "**/*.{md,mdx}"], base: "./content" }),
-  }),
-};
+    return {
+        id: author,
+        data: obj
+    }
+})
+
+export type Author = z.infer<typeof authorSchema>;
+
+
+// 4. Define a `loader` and `schema` for each collection
+const news = defineCollection({
+    loader: glob({ base: './content/news', pattern: '**/*.{md,mdx}' }), schema: z.object({
+        title: z.string().optional().default("Untitled"),
+        description: z.string().optional().default("No description provided."),
+        date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: 'Invalid date format' }),
+        tags: z.array(z.string()).optional().default([]),
+        authors: z.array(authorSchema),
+        category: z.string().default("general"),
+    }),
+});
+
+export const collections = { news };

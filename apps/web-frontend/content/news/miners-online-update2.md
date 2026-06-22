@@ -1,11 +1,10 @@
 ---
 title: 'Miners Online Update 2: New website and infrastructure'
 description: "Miners Online has a new website and backend infrastructure! See our new website design, dynamic MOTD, server links, and forced hosts."
-template: blog
 date: "2026-05-01"
-authors: ["samuel-hulme"]
+authors: ["samuelh2005"]
 tags: ["changelog", "infrastructure", "website"]
-topics: ["general"]
+category: "changelog"
 ---
 
 Throughout the last one month I have been working on the goals of simplification, professionalism, and clarity for Miners Online.

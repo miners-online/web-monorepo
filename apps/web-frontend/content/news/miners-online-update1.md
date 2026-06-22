@@ -1,26 +1,25 @@
 ---
-template: article.html
 title: 'Miners Online Update 1: Minigames Lobby'
 description: "Miners Online has a new lobby server! See our new server selector compass and NPCs to join featured servers."
 date: "2026-02-01"
-authors: ["samuel-hulme"]
-tags: ["changelog"]
-topics: ["server/minigames"]
+authors: ["samuelh2005"]
+tags: ["minecraft-server", "minigames", "lobby"]
+category: "changelog"
 ---
 
 During the last 3 days at Miners Online we have been developing a new lobby server. When joining Miners Online you will land in lobby instead of the survival or creative worlds.
 
 This lobby server is online 24/7 meaning you will no longer get a scary error message when joining Miners Online when everything else is offline.
 
-![](./2026-02-01_09.35.54.webp)
+![](/blog_public/miners-online-update1/2026-02-01_09.35.54.webp)
 
 ## Server Selector compass
 
 On your hotbar you will see a compass, This is the Server Selector. Just use your interact button (normally right click) and a fancy GUI built using Mojang's official dialog framework - instead of archaic chest-like UIs that every other server has.
 
-![](./2026-02-01_09.38.23.webp)
+![](/blog_public/miners-online-update1/2026-02-01_09.38.23.webp)
 
-![](./2026-02-01_09.36.24.webp)
+![](/blog_public/miners-online-update1/2026-02-01_09.36.24.webp)
 
 
 ## Server Selector NPCs
@@ -31,7 +30,7 @@ These NPCs represent featured servers, the text above them will display server s
 
 To join the respective server just use your interact button again. 
 
-![](./2026-02-01_09.36.09.webp)
+![](/blog_public/miners-online-update1/2026-02-01_09.36.09.webp)
 
 ## In Conclusion
 
