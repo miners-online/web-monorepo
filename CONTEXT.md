@@ -9,7 +9,7 @@ IP: `play.minersonline.uk`
 Version: 1.8-26.1.2
 Editions: Java Edition and Bedrock Edition
 
-Availability: Does not operate 24/7 due to economical reasons, and there is no fixed schedule.
+Availability: Does operate 24/7
 
 ## Principles
 
@@ -60,6 +60,8 @@ Editions: Java Edition
 Mods are required. Its a Create mod focused modpack.
 
 Membership is invite only, and is not available to the public. Membership is not available for purchase, and is not available to the public.
+
+Availability: Does not operate 24/7 due to economical reasons, and there is no fixed schedule.
 
 ## Socials:
 
