@@ -30,3 +30,11 @@
     max-width: 100%;
     height: auto;
 }
+
+.flex-shrink-0 {
+    flex-shrink: 0 !important;
+}
+
+html, body {
+    height: 100%;
+}
