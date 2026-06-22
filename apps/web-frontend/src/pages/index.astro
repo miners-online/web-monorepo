@@ -1,6 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import globals from '@/globals';
+import { getCollection } from "astro:content";
+import ArticleDisplay from "@/components/ArticleDisplay.astro";
+
+const news = (await getCollection("news"))
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+    .slice(0, 4);
 
 const servers = [
     {
@@ -72,58 +78,17 @@ const servers = [
         <div class="row g-3">
             <!-- Left big card -->
             <div class="col-12 col-lg-8">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h3 class="card-title">
-                            <a href="https://www.minersonline.uk/news/miners-online-update2">Miners Online Update 2: New website and infrastructure</a>
-                        </h3>
-                        <p class="card-text">Throughout the last one month I have been working on the goals of simplification, professionalism, and clarity for Miners Online. This has resulted in a complete redesign of the website and a major overhaul of the backend infrastructure. In this art...</p>
-                        <a class="btn btn-primary" href="https://www.minersonline.uk/news/miners-online-update2">
-                            Read more
-                        </a>
-                    </div>
-                    <div class="card-footer text-body-secondary">
-                        Posted on May 1, 2026 by samuelh2005
-                    </div>
-                </div>
+                {news.length > 0 && (
+                    <ArticleDisplay id={news[0].id} data={news[0].data} classes="h-100" />
+                )}
             </div>
 
             <!-- Right stacked cards -->
             <div class="col-12 col-lg-4 d-flex flex-column gap-3">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">
-                            <a href="https://www.minersonline.uk/news/miners-online-update1">Miners Online Update 1: Minigames Lobby</a>
-                        </h3>
-                        <p class="card-text">During the last 3 days at Miners Online we have been developing a new lobby server. When joining Miners Online you will land in lobby instead of the survival or creative worlds. This lobby server is online 24/7 meaning you will no longer get a scary...</p>
-                        <a class="btn btn-primary" href="https://www.minersonline.uk/news/miners-online-update1">
-                            Read more
-                        </a>
-                    </div>
-                    <div class="card-footer text-body-secondary">
-                        Posted on February 1, 2026 by samuelh2005
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">
-                            <a href="https://www.minersonline.uk/news/github-horror-story">GitHub Horror Story: When Our Site Was Stolen in the Dark</a>
-                        </h3>
-                        <p class="card-text">On October 27, 2024, the Miners Online website was compromised by an external entity associated with a foreign online casino, leading to the unauthorized takeover of our site. Upon discovering that our website had been replaced, I immediately conduc...</p>
-                        <a class="btn btn-primary" href="https://www.minersonline.uk/news/github-horror-story">
-                            Read more
-                        </a>
-                    </div>
-                    <div class="card-footer text-body-secondary">
-                        Posted on October 28, 2024 by samuelh2005
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">Card 4</div>
-                </div>
+                <!-- Strip the first article -->
+                {news.slice(1).map((article) => (
+                    <ArticleDisplay id={article.id} data={article.data} />
+                ))}
             </div>
         </div>
 

@@ -23,17 +23,21 @@ const authorSchema = z.string().transform((author, ctx) => {
 
 export type Author = z.infer<typeof authorSchema>;
 
+const newsSchema = z.object({
+    title: z.string().optional().default("Untitled"),
+    description: z.string().optional().default("No description provided."),
+    date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: 'Invalid date format' }),
+    tags: z.array(z.string()).optional().default([]),
+    authors: z.array(authorSchema),
+    category: z.string().default("general"),
+});
+
+export type News = z.infer<typeof newsSchema>;
+
 
 // 4. Define a `loader` and `schema` for each collection
 const news = defineCollection({
-    loader: glob({ base: './content/news', pattern: '**/*.{md,mdx}' }), schema: z.object({
-        title: z.string().optional().default("Untitled"),
-        description: z.string().optional().default("No description provided."),
-        date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: 'Invalid date format' }),
-        tags: z.array(z.string()).optional().default([]),
-        authors: z.array(authorSchema),
-        category: z.string().default("general"),
-    }),
+    loader: glob({ base: './content/news', pattern: '**/*.{md,mdx}' }), schema: newsSchema
 });
 
 export const collections = { news };

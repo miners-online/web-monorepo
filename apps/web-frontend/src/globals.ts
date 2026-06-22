@@ -9,7 +9,6 @@ interface SiteGlobals {
     }[];
     announcement?: string;
     footer: {
-        copyright: string;
         columns: {
             title: string;
             links: {
@@ -51,7 +50,6 @@ const globals: SiteGlobals = {
     ],
     announcement: "Miners Online is currently in development. Check the latest news and updates!",
     footer: {
-        copyright: "Miners Online - © Samuel Hulme 2017 - 2026. All rights reserved.",
         columns: [
             {
                 title: "Navigation",

@@ -10,7 +10,7 @@ const { title } = Astro.props;
 
 const currentUrl = Astro.url.pathname;
 
-const buildDate = new Date().toISOString().slice(0, 10);
+const buildDate = new Date();
 ---
 
 <!doctype html>
@@ -115,7 +115,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
                 </div>
 
                 <p class="text-center mb-0">
-                    {globals.footer.copyright} - Built at {buildDate}
+                    Miners Online - © Samuel Hulme 2017 - {buildDate.getFullYear()}. All rights reserved.
                 </p>
             </div>
         </footer>
