@@ -90,6 +90,17 @@ const buildDate = new Date();
                 <slot name="header" />
             </header>
 
+            <!-- Status Message Section -->
+            {globals.announcement && (
+                <section class="container my-2">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <p>{globals.announcement}</p>
+                        </div>
+                    </div>
+                </section>
+            )}
+
             <slot />
         </div>
 
@@ -105,6 +116,7 @@ const buildDate = new Date();
                                         <a
                                             href={link.url}
                                             rel="noopener noreferrer"
+                                            class="text-decoration-none text-white"
                                         >
                                             <i class={link.icon}></i> {link.title}
                                         </a>

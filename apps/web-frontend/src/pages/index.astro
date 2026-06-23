@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import globals from '@/globals';
 import { getCollection } from "astro:content";
 import ArticleDisplay from "@/components/ArticleDisplay.astro";
 
@@ -70,17 +69,6 @@ export const prerender = false;
             </div>
         </div>
     </section>
-
-    <!-- Status Message Section -->
-    {globals.announcement && (
-        <section class="container my-2">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <p>{globals.announcement}</p>
-                </div>
-            </div>
-        </section>
-    )}
 
     <!-- News Section -->
     <section class="container my-2">
