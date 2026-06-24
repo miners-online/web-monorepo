@@ -1,0 +1,77 @@
+---
+---
+
+<div
+  class="py-3 text-center"
+  data-server-status-progress
+  data-url={"https://api.mcsrvstat.us/3/play.minersonline.uk"}
+>
+    <p class="mb-1" data-status-text>Checking server...<noscript>Enable JS to see server status</noscript></p>
+
+    <div
+        class="progress mb-1 mx-auto"
+        style="width: 30%"
+        data-progress-wrapper
+        hidden
+    >
+        <div
+            class="progress-bar"
+            role="progressbar"
+            data-progress-bar
+            style="width: 0%"
+        ></div>
+    </div>
+
+    <p class="mb-1" data-player-count hidden></p>
+</div>
+
+<script>
+    function updateComponent(root: HTMLElement) {
+        const url = root.dataset.url;
+
+        const statusText = root.querySelector<HTMLElement>("[data-status-text]");
+        const progressWrapper = root.querySelector<HTMLElement>("[data-progress-wrapper]");
+        const progressBar = root.querySelector<HTMLElement>("[data-progress-bar]");
+        const playerCount = root.querySelector<HTMLElement>("[data-player-count]");
+
+        async function run() {
+            if (!url || !statusText || !progressWrapper || !progressBar || !playerCount) {
+                console.error("Missing required elements or URL for server status progress component.");
+                return;
+            }
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (!data.online) {
+                    statusText.textContent = "Server is offline";
+                    progressWrapper.hidden = true;
+                    playerCount.hidden = true;
+                    return;
+                }
+
+                statusText.textContent = "Server is online";
+
+                const online = data.players.online;
+                const max = data.players.max || 1;
+                const percent = Math.min(100, (online / max) * 100);
+
+                progressWrapper.hidden = false;
+                playerCount.hidden = false;
+
+                progressBar.style.width = `${percent}%`;
+                playerCount.textContent = `${online}/${max} online players`;
+            } catch (e) {
+                statusText.textContent = "Server status unavailable";
+                progressWrapper.hidden = true;
+                playerCount.hidden = true;
+            }
+        }
+
+        run();
+    }
+
+    document
+      .querySelectorAll<HTMLElement>("[data-server-status-progress]")
+      .forEach(updateComponent);
+</script>

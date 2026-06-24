@@ -1,0 +1,41 @@
+---
+---
+
+<span
+  class="badge ms-2 fs-6 align-middle bg-secondary"
+  data-server-badge
+  data-url={"https://api.mcsrvstat.us/3/play.minersonline.uk"}
+>
+  Checking... <noscript>Enable JS to see server status</noscript>
+</span>
+
+<script>
+    async function updateBadge(badge: HTMLElement) {
+      const url = badge.dataset.url;
+
+      if (!url) {
+          console.error("No URL provided for server badge.");
+          return;
+      }
+
+      try {
+          const res = await fetch(url);
+          const data = await res.json();
+
+          const online = data.online;
+
+          badge.textContent = online ? "Online" : "Offline";
+
+          badge.classList.remove("bg-secondary", "bg-success", "bg-danger");
+          badge.classList.add(online ? "bg-success" : "bg-danger");
+      } catch (e) {
+          badge.textContent = "Offline";
+          badge.classList.remove("bg-secondary", "bg-success");
+          badge.classList.add("bg-danger");
+      }
+    }
+
+    document
+      .querySelectorAll<HTMLElement>("[data-server-badge]")
+      .forEach(updateBadge);
+</script>

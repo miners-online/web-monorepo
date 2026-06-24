@@ -2,6 +2,8 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import ArticleDisplay from "@/components/ArticleDisplay.astro";
+import StatusBadge from "@/components/StatusBadge.astro";
+import ServerStatusProgress from "@/components/ServerStatusProgress.astro";
 
 const news = (await getCollection("news"))
     .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
@@ -21,11 +23,6 @@ const servers = [
         version: "1.8-26.1.2"
     }
 ];
-
-const response = await fetch("https://api.mcsrvstat.us/3/play.minersonline.uk");
-const data = await response.json();
-
-export const prerender = false;
 ---
 
 <BaseLayout title="Home">
@@ -37,15 +34,7 @@ export const prerender = false;
                 <div class="col-lg-6 text-center text-lg-start">
                     <h1 class="display-4 fw-bold mb-3 lh-1">
                         Join Miners Online today.
-                        {data.online ? (
-                            <span class="badge bg-success ms-2 fs-6 align-middle">
-                                Online
-                            </span>
-                        ) : (
-                            <span class="badge bg-danger ms-2 fs-6 align-middle">
-                                Offline
-                            </span>
-                        )}
+                        <StatusBadge/>
                     </h1>
                     <p class="lead mb-4">
                         Join our in development Minecraft server and compete in our farming, fishing, and mining competitions.
@@ -104,18 +93,7 @@ export const prerender = false;
         <div class="container">
             <h2 class="text-center mb-5">Play now</h2>
 
-            {data.online ? (
-                <div class="py-3 text-center">
-                    <p class="mb-1">Server is online</p>
-                    <div class="progress mb-1 mx-auto" style="width: 30%">
-                        <div class="progress-bar" role="progressbar" style={`width: ${data.players.online / data.players.max * 100}%`}></div>
-                    </div>
-                    <p class="mb-1">{data.players.online}/{data.players.max} online players</p>
-                </div>
-            ) : (
-                <p class="text-center">Server is offline</p>
-            )}
-
+            <ServerStatusProgress/>
 
             <div class="d-flex flex-column">
                 {servers.map((server) => (
