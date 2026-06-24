@@ -11,28 +11,28 @@
 
 <script>
     async function updateBadge(badge: HTMLElement) {
-      const url = badge.dataset.url;
+        const url = badge.dataset.url;
 
-      if (!url) {
-          console.error("No URL provided for server badge.");
-          return;
-      }
+        if (!url) {
+            console.error("No URL provided for server badge.");
+            return;
+        }
 
-      try {
-          const res = await fetch(url);
-          const data = await res.json();
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
 
-          const online = data.online;
+            const online = data.online;
 
-          badge.textContent = online ? "Online" : "Offline";
+            badge.textContent = online ? "Online" : "Offline";
 
-          badge.classList.remove("bg-secondary", "bg-success", "bg-danger");
-          badge.classList.add(online ? "bg-success" : "bg-danger");
-      } catch (e) {
-          badge.textContent = "Offline";
-          badge.classList.remove("bg-secondary", "bg-success");
-          badge.classList.add("bg-danger");
-      }
+            badge.classList.remove("bg-secondary", "bg-success", "bg-danger");
+            badge.classList.add(online ? "bg-success" : "bg-danger");
+        } catch (e) {
+            badge.textContent = "Offline";
+            badge.classList.remove("bg-secondary", "bg-success");
+            badge.classList.add("bg-danger");
+        }
     }
 
     document
