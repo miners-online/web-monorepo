@@ -4,25 +4,25 @@
 <span
   class="badge ms-2 fs-6 align-middle bg-secondary"
   data-server-badge
-  data-url={"https://api.mcsrvstat.us/3/play.minersonline.uk"}
+  data-hostname={"play.minersonline.uk"}
 >
   Checking... <noscript>Enable JS to see server status</noscript>
 </span>
 
 <script>
     async function updateBadge(badge: HTMLElement) {
-        const url = badge.dataset.url;
+        const hostname = badge.dataset.hostname;
 
-        if (!url) {
-            console.error("No URL provided for server badge.");
+        if (!hostname) {
+            console.error("No hostname provided for server badge.");
             return;
         }
 
         try {
-            const res = await fetch(url);
+            const res = await fetch(`/api/status`);
             const data = await res.json();
 
-            const online = data.online;
+            const online = data.servers[hostname]?.online;
 
             badge.textContent = online ? "Online" : "Offline";
 

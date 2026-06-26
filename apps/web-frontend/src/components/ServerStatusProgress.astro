@@ -4,7 +4,7 @@
 <div
   class="py-3 text-center"
   data-server-status-progress
-  data-url={"https://api.mcsrvstat.us/3/play.minersonline.uk"}
+  data-hostname={"play.minersonline.uk"}
 >
     <p class="mb-1" data-status-text>Checking server...<noscript>Enable JS to see server status</noscript></p>
 
@@ -27,7 +27,7 @@
 
 <script>
     function updateComponent(root: HTMLElement) {
-        const url = root.dataset.url;
+        const hostname = root.dataset.hostname;
 
         const statusText = root.querySelector<HTMLElement>("[data-status-text]");
         const progressWrapper = root.querySelector<HTMLElement>("[data-progress-wrapper]");
@@ -35,15 +35,15 @@
         const playerCount = root.querySelector<HTMLElement>("[data-player-count]");
 
         async function run() {
-            if (!url || !statusText || !progressWrapper || !progressBar || !playerCount) {
-                console.error("Missing required elements or URL for server status progress component.");
+            if (!hostname || !statusText || !progressWrapper || !progressBar || !playerCount) {
+                console.error("Missing required elements or hostname for server status progress component.");
                 return;
             }
             try {
-                const res = await fetch(url);
+                const res = await fetch(`/api/status`);
                 const data = await res.json();
 
-                if (!data.online) {
+                if (!data.servers[hostname]?.online) {
                     statusText.textContent = "Server is offline";
                     progressWrapper.hidden = true;
                     playerCount.hidden = true;
@@ -52,8 +52,8 @@
 
                 statusText.textContent = "Server is online";
 
-                const online = data.players.online;
-                const max = data.players.max || 1;
+                const online = data.servers[hostname].players.current;
+                const max = data.servers[hostname].players.max || 1;
                 const percent = Math.min(100, (online / max) * 100);
 
                 progressWrapper.hidden = false;
