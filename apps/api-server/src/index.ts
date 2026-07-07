@@ -4,6 +4,7 @@ import { logger } from 'hono/logger'
 import { AppEnv, AppConfig } from "./types";
 import { statusRoute } from "./api/status";
 import { createMiddleware } from "hono/factory";
+import userRoleRoute from "./api/role";
 
 function createApp(config: AppConfig) {
     // const db = drizzle(config.DATABASE_URL);
@@ -26,6 +27,7 @@ function createApp(config: AppConfig) {
     });
 
     app.route("/api/status", statusRoute);
+    app.route("/api/me/role", userRoleRoute);
 
     return app;
 }

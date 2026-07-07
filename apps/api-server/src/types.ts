@@ -2,6 +2,10 @@ import { Env } from "hono";
 
 type AppConfig = {
     // DATABASE_URL: string;
+    getUser(): Promise<{
+        userId: string | null;
+        isAuthenticated: boolean;
+    }>
 }
 
 type AppVariables = {
