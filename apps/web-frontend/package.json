@@ -12,7 +12,8 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/vercel": "^11.0.0",
-    "astro": "^7.0.0",
-    "api-server": "workspace:*"
+    "@clerk/astro": "^3.4.12",
+    "api-server": "workspace:*",
+    "astro": "^7.0.0"
   }
 }

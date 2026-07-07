@@ -2,6 +2,8 @@
 import globals from '@/globals';
 import '@/style.css';
 
+import { Show, UserButton, SignInButton, SignUpButton } from '@clerk/astro/components'
+
 interface Props {
     title?: string;
 }
@@ -68,7 +70,7 @@ const buildDate = new Date();
                         </button>
 
                         <div class="collapse navbar-collapse" id="mainNavbar">
-                            <ul class="navbar-nav">
+                            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                                 {globals.navigation.map((item) => (
                                     <li class="nav-item">
                                         <a
@@ -83,6 +85,19 @@ const buildDate = new Date();
                                     </li>
                                 ))}
                             </ul>
+                            <div class="d-flex">
+                                <Show when="signed-out">
+                                    <SignInButton mode="modal" asChild>
+                                        <button class="btn btn-outline-light me-2">Sign In</button>
+                                    </SignInButton>
+                                    <SignUpButton mode="modal" asChild>
+                                        <button class="btn btn-outline-light me-2">Sign Up</button>
+                                    </SignUpButton>
+                                </Show>
+                                <Show when="signed-in">
+                                    <UserButton />
+                                </Show>
+                            </div>
                         </div>
                     </div>
                 </nav>
