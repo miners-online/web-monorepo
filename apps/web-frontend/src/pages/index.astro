@@ -2,8 +2,8 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import ArticleDisplay from "@/components/ArticleDisplay.astro";
-import StatusBadge from "@/components/StatusBadge.astro";
-import ServerStatusProgress from "@/components/ServerStatusProgress.astro";
+import StatusBadge from "@/components/StatusBadge";
+import ServerStatusProgress from "@/components/ServerStatusProgress";
 
 const news = (await getCollection("news"))
     .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
@@ -34,7 +34,7 @@ const servers = [
                 <div class="col-lg-6 text-center text-lg-start">
                     <h1 class="display-4 fw-bold mb-3 lh-1">
                         Join Miners Online today.
-                        <StatusBadge/>
+                        <StatusBadge hostname="play.minersonline.uk" client:load/>
                     </h1>
                     <p class="lead mb-4">
                         Join our in development Minecraft server and compete in our farming, fishing, and mining competitions.
@@ -93,7 +93,7 @@ const servers = [
         <div class="container">
             <h2 class="text-center mb-5">Play now</h2>
 
-            <ServerStatusProgress/>
+            <ServerStatusProgress hostname="play.minersonline.uk" client:load/>
 
             <div class="d-flex flex-column">
                 {servers.map((server) => (

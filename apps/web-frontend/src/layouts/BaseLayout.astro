@@ -1,8 +1,9 @@
 ---
+import NavBar from '@/components/NavBar';
 import globals from '@/globals';
 import '@/style.css';
 
-import { Show, UserButton, SignInButton, SignUpButton } from '@clerk/astro/components'
+import { Show, UserProfile, SignInButton, SignUpButton } from '@clerk/astro/react'
 
 interface Props {
     title?: string;
@@ -51,56 +52,7 @@ const buildDate = new Date();
                 ]}
                 style="background: linear-gradient(135deg, var(--blue-5), var(--blue-6), var(--green-5));"
             >
-                <nav class="navbar navbar-expand-md navbar-dark py-3">
-                    <div class="container">
-                        <a class="navbar-brand me-4" href="/">
-                            {globals.meta.siteName}
-                        </a>
-
-                        <button
-                            class="navbar-toggler"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#mainNavbar"
-                            aria-controls="mainNavbar"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                        >
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="mainNavbar">
-                            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
-                                {globals.navigation.map((item) => (
-                                    <li class="nav-item">
-                                        <a
-                                            class:list={[
-                                                "nav-link",
-                                                item.url === currentUrl && "active"
-                                            ]}
-                                            href={item.url}
-                                        >
-                                            <i class={item.icon}></i> {item.title}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                            <div class="d-flex">
-                                <Show when="signed-out">
-                                    <SignInButton mode="modal" asChild>
-                                        <button class="btn btn-outline-light me-2">Sign In</button>
-                                    </SignInButton>
-                                    <SignUpButton mode="modal" asChild>
-                                        <button class="btn btn-outline-light me-2">Sign Up</button>
-                                    </SignUpButton>
-                                </Show>
-                                <Show when="signed-in">
-                                    <UserButton />
-                                </Show>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+                <NavBar currentUrl={currentUrl} client:load/>
 
                 <slot name="header" />
             </header>
