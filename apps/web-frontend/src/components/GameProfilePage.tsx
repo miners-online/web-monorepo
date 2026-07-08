@@ -9,7 +9,7 @@ export default function GameProfilePage() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        console.log(window.location.href);
+        console.log("useEffect called");
 
         const load = async () => {
             try {

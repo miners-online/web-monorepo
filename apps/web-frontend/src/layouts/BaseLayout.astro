@@ -3,13 +3,12 @@ import NavBar from '@/components/NavBar';
 import globals from '@/globals';
 import '@/style.css';
 
-import { Show, UserProfile, SignInButton, SignUpButton } from '@clerk/astro/react'
-
 interface Props {
     title?: string;
+    showAnnouncement?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, showAnnouncement=true } = Astro.props;
 
 const currentUrl = Astro.url.pathname;
 
@@ -58,7 +57,7 @@ const buildDate = new Date();
             </header>
 
             <!-- Status Message Section -->
-            {globals.announcement && (
+            {showAnnouncement && globals.announcement && (
                 <section class="container my-2">
                     <div class="card mb-4">
                         <div class="card-body">

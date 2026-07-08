@@ -1,0 +1,21 @@
+---
+import GameProfilePage from "@/components/GameProfilePage";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { UserProfile } from '@clerk/astro/components'
+---
+
+<BaseLayout title="Account" showAnnouncement={false}>
+    <UserProfile>
+        <UserProfile.Page label="Custom Page" url="custom-page">
+            <svg
+                slot="label-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                fill="currentColor"
+            >
+                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path>
+            </svg>
+            <GameProfilePage client:load/>
+        </UserProfile.Page>
+    </UserProfile>
+</BaseLayout>
