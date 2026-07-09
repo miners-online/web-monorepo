@@ -7,9 +7,5 @@
     "build:web": "pnpm --filter web-frontend build",
     "dev:api": "pnpm --filter api-server dev",
     "db:push": "pnpm --filter api-server db:push"
-  },
-  "dependencies": {
-    "@remixicon/react": "^4.9.0",
-    "react": "^19.2.5"
   }
 }
