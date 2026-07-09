@@ -4,18 +4,7 @@ import { serve } from '@hono/node-server'
 import * as dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' })
 
-import { createRouter } from "./router.js";
-
-const config = {
-    getUser: async () => {
-        return {
-            isAuthenticated: false,
-            userId: null,
-        };
-    }
-};
-
-const router = createRouter(config);
+import router from "./router.js";
 
 const app = new Hono();
 app.route("/", router);

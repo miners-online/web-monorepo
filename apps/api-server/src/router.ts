@@ -1,35 +1,31 @@
 import { Hono } from "hono"
 import { logger } from 'hono/logger'
 
-import { AppEnv, AppConfig } from "./types.js";
+import { AppEnv } from "./types.js";
 import { statusRoute } from "./api/status.js";
 import { createMiddleware } from "hono/factory";
 import userRoleRoute from "./api/role.js";
 
-function createRouter(config: AppConfig) {
-    // const db = drizzle(config.DATABASE_URL);
+import { clerkMiddleware } from '@hono/clerk-auth'
 
-    const app = new Hono<AppEnv>();
+// const db = drizzle(config.DATABASE_URL);
 
-    const globalVarsMiddleware = createMiddleware<AppEnv>((c, next) => {
-        c.set("config", config);
-        return next();
-    });
+const router = new Hono<AppEnv>();
 
-    app.use("*", logger());
-    app.use("*", globalVarsMiddleware);
+const globalVarsMiddleware = createMiddleware<AppEnv>((c, next) => {
+    // c.set("config", config);
+    return next();
+});
 
-    // Oauth routes set their own base path, so we route them at "/"
-    // app.route("/", auth);
+router.use("*", logger());
+router.use("*", globalVarsMiddleware);
+router.use("*", clerkMiddleware());
 
-    app.get("/hello", (c) => {
-        return c.json({ message: "Hello, world!" });
-    });
+router.get("/hello", (c) => {
+    return c.json({ message: "Hello, world!" });
+});
 
-    app.route("/status", statusRoute);
-    app.route("/me/role", userRoleRoute);
+router.route("/status", statusRoute);
+router.route("/me/role", userRoleRoute);
 
-    return app;
-}
-
-export { createRouter };
+export default router;
