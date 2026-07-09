@@ -14,6 +14,7 @@ profileRoute.get("/", async (c) => {
     const baseUrl = `${url.protocol}//${url.host}`;
 
     return c.json({
+        userId,
         attributes: {
             role: `${baseUrl}/profile/role`
         }
