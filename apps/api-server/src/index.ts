@@ -1,35 +1,32 @@
-import { Hono } from "hono"
-import { logger } from 'hono/logger'
+import { serve } from '@hono/node-server'
 
-import { AppEnv, AppConfig } from "./types";
-import { statusRoute } from "./api/status";
-import { createMiddleware } from "hono/factory";
-import userRoleRoute from "./api/role";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-function createApp(config: AppConfig) {
-    // const db = drizzle(config.DATABASE_URL);
+import { createApp } from "./app";
 
-    const app = new Hono<AppEnv>();
 
-    const globalVarsMiddleware = createMiddleware<AppEnv>((c, next) => {
-        c.set("config", config);
-        return next();
-    });
+const config = {
+    getUser: async () => {
+        return {
+            isAuthenticated: false,
+            userId: null,
+        };
+    }
+};
 
-    app.use("*", logger());
-    app.use("*", globalVarsMiddleware);
+const app = createApp(config);
 
-    // Oauth routes set their own base path, so we route them at "/"
-    // app.route("/", auth);
+export default app;
 
-    app.get("/api/hello", (c) => {
-        return c.json({ message: "Hello, world!" });
-    });
+if (process.env.USE_NODE_SERVER === 'true') {
+    console.log('Starting server...');
+    const server = serve(app);
+    const address = server.address();
 
-    app.route("/api/status", statusRoute);
-    app.route("/api/me/role", userRoleRoute);
-
-    return app;
+    if (typeof address === 'string') {
+        console.log('Server running on', address);
+    } else if (address?.address && address?.port) {
+        console.log('Server running on', address.address + ':' + address.port);
+    }
 }
-
-export { createApp };
