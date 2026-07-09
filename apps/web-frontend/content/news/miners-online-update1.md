@@ -2,7 +2,11 @@
 title: 'Miners Online Update 1: Minigames Lobby'
 description: "Miners Online has a new lobby server! See our new server selector compass and NPCs to join featured servers."
 date: "2026-02-01"
-authors: ["samuelh2005"]
+authors:
+  - name: "samuelh2005"
+    to: "https://github.com/samuelh2005"
+    avatar:
+      src: "https://avatars.githubusercontent.com/u/41990982?v=4"
 tags: ["minecraft-server", "minigames", "lobby"]
 category: "changelog"
 ---

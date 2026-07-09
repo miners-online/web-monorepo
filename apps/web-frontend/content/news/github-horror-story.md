@@ -2,7 +2,11 @@
 title: 'GitHub Horror Story: When Our Site Was Stolen in the Dark'
 description: A detailed account of how our website was compromised and the steps taken to resolve the issue.
 date: "2024-10-28"
-authors: ["samuelh2005"]
+authors:
+  - name: "samuelh2005"
+    to: "https://github.com/samuelh2005"
+    avatar:
+      src: "https://avatars.githubusercontent.com/u/41990982?v=4"
 tags: ["security", "incident", "website"]
 category: "general"
 ---

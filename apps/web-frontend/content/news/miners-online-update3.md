@@ -2,7 +2,11 @@
 title: "Miners Online Update 3: New architectural vision and Website v3"
 description: "Miners Online has a new architectural vision and Website v3! See our new RPG experience, website design, and infrastructure changes."
 date: "2026-06-23"
-authors: ["samuelh2005"]
+authors:
+  - name: "samuelh2005"
+    to: "https://github.com/samuelh2005"
+    avatar:
+      src: "https://avatars.githubusercontent.com/u/41990982?v=4"
 tags: ["infrastructure", "website", "rpg"]
 category: "changelog"
 ---

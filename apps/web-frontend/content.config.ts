@@ -6,9 +6,11 @@ const newsSchema = z.object({
   date: z.string().refine((date) => !isNaN(Date.parse(date)), { message: 'Invalid date format' }),
   tags: z.array(z.string()).optional().default([]),
   authors: z.array(z.object({
-    name: z.string().default("Anonymous"),
+    name: z.string(),
     to: z.string().url(),
-    avatar: z.string().url(),
+    avatar: z.object({
+      src: z.string().url(),
+    }).optional(),
   })),
   category: z.string().default("general"),
 });

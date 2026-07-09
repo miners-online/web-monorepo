@@ -2,7 +2,11 @@
 title: 'Miners Online Update 2: New website and infrastructure'
 description: "Miners Online has a new website and backend infrastructure! See our new website design, dynamic MOTD, server links, and forced hosts."
 date: "2026-05-01"
-authors: ["samuelh2005"]
+authors:
+  - name: "samuelh2005"
+    to: "https://github.com/samuelh2005"
+    avatar:
+      src: "https://avatars.githubusercontent.com/u/41990982?v=4"
 tags: ["infrastructure", "website"]
 category: "changelog"
 ---
