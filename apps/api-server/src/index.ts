@@ -1,10 +1,10 @@
+import { Hono } from "hono"
 import { serve } from '@hono/node-server'
 
 import * as dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ path: '.env.local' })
 
-import { createApp } from "./router.js";
-
+import { createRouter } from "./router.js";
 
 const config = {
     getUser: async () => {
@@ -15,7 +15,10 @@ const config = {
     }
 };
 
-const app = createApp(config);
+const router = createRouter(config);
+
+const app = new Hono();
+app.route("/", router);
 
 export default app;
 

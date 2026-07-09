@@ -6,7 +6,7 @@ import { statusRoute } from "./api/status.js";
 import { createMiddleware } from "hono/factory";
 import userRoleRoute from "./api/role.js";
 
-function createApp(config: AppConfig) {
+function createRouter(config: AppConfig) {
     // const db = drizzle(config.DATABASE_URL);
 
     const app = new Hono<AppEnv>();
@@ -32,4 +32,4 @@ function createApp(config: AppConfig) {
     return app;
 }
 
-export { createApp };
+export { createRouter };
