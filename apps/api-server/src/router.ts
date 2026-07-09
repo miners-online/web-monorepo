@@ -4,9 +4,9 @@ import { logger } from 'hono/logger'
 import { AppEnv } from "./types.js";
 import { statusRoute } from "./api/status.js";
 import { createMiddleware } from "hono/factory";
-import userRoleRoute from "./api/role.js";
+import profileRoute from "./api/profile.js";
 
-import { clerkMiddleware } from '@hono/clerk-auth'
+import { clerkMiddleware } from '@clerk/hono'
 
 // const db = drizzle(config.DATABASE_URL);
 
@@ -26,6 +26,6 @@ router.get("/hello", (c) => {
 });
 
 router.route("/status", statusRoute);
-router.route("/me/role", userRoleRoute);
+router.route("/profile", profileRoute);
 
 export default router;
