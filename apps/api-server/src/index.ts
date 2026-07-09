@@ -3,7 +3,7 @@ import { serve } from '@hono/node-server'
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { createApp } from "./app.js";
+import { createApp } from "./router.js";
 
 
 const config = {
