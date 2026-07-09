@@ -1,10 +1,10 @@
 import { Hono } from "hono"
 import { logger } from 'hono/logger'
 
-import { AppEnv, AppConfig } from "./types";
-import { statusRoute } from "./api/status";
+import { AppEnv, AppConfig } from "./types.js";
+import { statusRoute } from "./api/status.js";
 import { createMiddleware } from "hono/factory";
-import userRoleRoute from "./api/role";
+import userRoleRoute from "./api/role.js";
 
 function createApp(config: AppConfig) {
     // const db = drizzle(config.DATABASE_URL);

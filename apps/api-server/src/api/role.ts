@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { AppEnv } from "../types";
+import { AppEnv } from "../types.js";
 
 export const userRoleRoute = new Hono<AppEnv>();
 
